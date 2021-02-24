@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/albums
+Content-Type: application/json; charset=utf-8
+
+
+{
+  "title": "SUMMA",
+  "artist": "Sara",
+  "rating": 4.5
+}
