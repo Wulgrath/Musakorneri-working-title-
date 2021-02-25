@@ -1,11 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css';
+import { useDispatch } from 'react-redux'
 import LoginForm from './components/LoginForm'
-import AlbumList from './components/AlbumList'
 import Footer from './components/Footer'
 import Navigation from './components/Navigation'
+import { loggedIn } from './reducers/loginReducer'
+import albumService from './services/albums'
 
-function App() {
+
+const App = () => {
+
+  const dispatch = useDispatch()
+  
+  /*useEffect(() => {
+    dispatch(initUsers())
+  }, [dispatch])*/
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      dispatch(loggedIn(user))
+      albumService.setToken(user.token)
+    }
+  })
+
   return (
     <div className='container'>
       <div>

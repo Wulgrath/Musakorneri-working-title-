@@ -4,7 +4,7 @@ export const initAlbums = () => {
   return async dispatch => {
     const albums = await albumService.getAll()
     dispatch({
-      type: 'INIT',
+      type: 'INIT_ALL',
       data: albums
     })
   }
@@ -24,7 +24,7 @@ const albumReducer = (state = [], action) => {
   console.log(action)
 
   switch (action.type) {
-    case 'INIT':
+    case 'INIT_ALL':
       return action.data
     case 'NEW':
       return [...state, action.data]

@@ -12,6 +12,7 @@ const AlbumList = () => {
   }, [dispatch])
 
   const albums = useSelector (state => state.albums)
+  
 
   return (
     <div>
@@ -36,7 +37,7 @@ const AlbumList = () => {
                 </Link>
               </td>
               <td>
-                <Link to={`/artists/`}>
+                <Link to={`/artists/${album.artistID.id}`}>
                 {album.artist}
                 </Link>
               </td>

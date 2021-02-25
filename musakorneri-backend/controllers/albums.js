@@ -7,6 +7,16 @@ albumsRouter.get('/', async (req, res) => {
   res.json(albums.map(album => album.toJSON()))
 })
 
+albumsRouter.get('/:id', async (req, res) => {
+  try {
+    const album = await Album.findById(req.params.id).populate('artistID', {name: 1})
+    res.status(200).json(album)
+  } catch (exception) {
+    res.status(400).json(exception)
+  }
+})
+
+
 albumsRouter.post('/', async (req, res) => {
   const body = req.body
 

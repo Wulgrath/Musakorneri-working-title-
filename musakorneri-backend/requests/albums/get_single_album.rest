@@ -1,0 +1,1 @@
+GET http://localhost:3001/api/albums/6036baf001627c2cc88ed719
