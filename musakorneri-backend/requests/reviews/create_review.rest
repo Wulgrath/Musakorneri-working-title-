@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/reviews
+Content-Type: application/json; charset=utf-8
+
+
+{
+  "albumID": "6036ba0cdfc8823904220459",
+  "rating": 4.5,
+  "review": "Mainio levy :)"
+}

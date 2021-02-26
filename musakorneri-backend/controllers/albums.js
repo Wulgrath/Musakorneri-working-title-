@@ -3,7 +3,7 @@ const Album = require ('../models/album')
 const Artist = require ('../models/artist')
 
 albumsRouter.get('/', async (req, res) => {
-  const albums = await Album.find({}).populate('artistID', {name: 1})
+  const albums = await Album.find({}).populate('artistID', {name: 1}).populate('reviews', {rating: 1})
   res.json(albums.map(album => album.toJSON()))
 })
 

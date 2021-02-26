@@ -6,9 +6,11 @@ const albumsRouter = require('./controllers/albums')
 const artistRouter = require('./controllers/artists')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const reviewsRouter = require('./controllers/reviews')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const { tokenExtractor } = require('./utils/tokenExtractor')
+
 
 
 const mongoUrl = config.MONGODB_URI
@@ -36,6 +38,7 @@ app.use(tokenExtractor)
 app.use('/api/albums', albumsRouter)
 app.use('/api/artists', artistRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/reviews', reviewsRouter)
 app.use('/api/login', loginRouter)
 
 module.exports = app

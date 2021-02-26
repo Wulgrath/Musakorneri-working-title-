@@ -12,10 +12,12 @@ const albumSchema = mongoose.Schema({
   released: {
     type: Date
   },
-  rating: {
-    type: Number,
-    default: 0
-  },
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Review'
+    }
+  ],
   artistID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Artist'
