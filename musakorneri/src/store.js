@@ -3,15 +3,19 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import albumReducer from './reducers/albumReducer'
 import artistReducer from './reducers/artistReducer'
-import singleArtistReducer from './reducers/singleArtistReducer'
 import loginReducer from './reducers/loginReducer'
+import reviewReducer from './reducers/reviewReducer'
+import userReducer from './reducers/userReducer'
+import singleAlbumReducer from './reducers/singleAlbumReducer'
 
 
 const reducer = combineReducers({
   albums: albumReducer,
   artists: artistReducer,
+  reviews: reviewReducer,
   loggedUser: loginReducer,
-  singleArtist: singleArtistReducer
+  users: userReducer,
+  singleAlbum: singleAlbumReducer
 })
 
 const store = createStore(reducer, composeWithDevTools(

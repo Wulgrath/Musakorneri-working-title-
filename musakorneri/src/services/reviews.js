@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3001/api/albums'
+const baseUrl = 'http://localhost:3001/api/reviews'
+
 
 let token = null
 
@@ -13,7 +14,7 @@ const getAll = () => {
   return req.then(res => res.data)
 }
 
-const getOne = (id) => {
+const getAlbumReviews = (id) => {
   const req = axios.get(`${baseUrl}/${id}`)
   return req.then(res => res.data)
 }
@@ -23,10 +24,10 @@ const create = async newObject => {
     headers: { Authorization: token }
   }
 
-  const res = await axios.post(baseUrl, newObject, config)
-  return res.data
+  const response = await axios.post(baseUrl, newObject, config)
+  return response.data
 }
 
 export default {
-  getAll, getOne, create, setToken
+  getAll, getAlbumReviews, create, setToken
 }

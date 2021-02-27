@@ -1,9 +1,10 @@
 POST http://localhost:3001/api/albums
 Content-Type: application/json; charset=utf-8
-
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRhbm55eSIsImlkIjoiNjAzYTQ4YzdmNmRiNDIzMTc4YjU5OWY3IiwiaWF0IjoxNjE0NDMzMzU1fQ.lm3A_b6woP3CUtnaFydf_9wXZUrIr3l7SCIpL-Cdw14
 
 {
-  "title": "SUMMA",
-  "artist": "Sara",
-  "rating": 4.5
+  "title": "Themata",
+  "artist": "Karnivool",
+  "rating": 4.5,
+  "review": "jee"
 }

@@ -10,7 +10,7 @@ const albumSchema = mongoose.Schema({
     required: true
   },
   released: {
-    type: Date
+    type: Number
   },
   reviews: [
     {
@@ -21,6 +21,10 @@ const albumSchema = mongoose.Schema({
   artistID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Artist'
+  },
+  ratingAvg:{
+    type: Number,
+    default: 0
   },
   comments: []
 })

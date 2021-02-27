@@ -12,7 +12,6 @@ const AlbumList = () => {
   }, [dispatch])
 
   const albums = useSelector (state => state.albums)
-  
 
   return (
     <div>
@@ -24,9 +23,6 @@ const AlbumList = () => {
             </td>
             <td>
               <h4>Artist</h4>
-            </td>
-            <td>
-              <h4>Rating</h4>
             </td>
           </tr>
           {albums.map(album =>
@@ -40,9 +36,6 @@ const AlbumList = () => {
                 <Link to={`/artists/${album.artistID.id}`}>
                 {album.artist}
                 </Link>
-              </td>
-              <td>
-                {album.rating}
               </td>
             </tr>
           )}

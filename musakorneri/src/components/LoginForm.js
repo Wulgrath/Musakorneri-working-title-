@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 import { login } from '../reducers/loginReducer'
 import albumService from '../services/albums'
+import reviewService from '../services/reviews'
 
 const LoginForm = () => {
 
@@ -21,6 +22,7 @@ const LoginForm = () => {
     })
     dispatch(login(user))
     albumService.setToken(user.token)
+    reviewService.setToken(user.token)
   }
 
   const logOut = () => {

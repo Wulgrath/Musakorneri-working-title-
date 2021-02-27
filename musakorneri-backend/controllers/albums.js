@@ -1,6 +1,9 @@
 const albumsRouter = require('express').Router()
+const jwt = require('jsonwebtoken')
 const Album = require ('../models/album')
 const Artist = require ('../models/artist')
+const Review = require('../models/review')
+const User = require('../models/user')
 
 albumsRouter.get('/', async (req, res) => {
   const albums = await Album.find({}).populate('artistID', {name: 1}).populate('reviews', {rating: 1})
@@ -8,9 +11,13 @@ albumsRouter.get('/', async (req, res) => {
 })
 
 albumsRouter.get('/:id', async (req, res) => {
+
   try {
+
     const album = await Album.findById(req.params.id).populate('artistID', {name: 1})
+
     res.status(200).json(album)
+
   } catch (exception) {
     res.status(400).json(exception)
   }
@@ -20,9 +27,15 @@ albumsRouter.get('/:id', async (req, res) => {
 albumsRouter.post('/', async (req, res) => {
   const body = req.body
 
+  const decodedToken = jwt.verify(req.token, process.env.SECRET)
+  if (!req.token || !decodedToken.id) {
+    return res.status(400).json({ error: 'token missing or invalid'})
+  }
+
+  const user = await User.findById(decodedToken.id)
+  
   //etsitään jo olemassaolevaa artistia, jos ei, lisätään artisti tietokantaan
   let artist = await Artist.findOne({name: body.artist})
-
 
   if (!artist) {
     artist = new Artist({ name: body.artist})
@@ -32,7 +45,7 @@ albumsRouter.post('/', async (req, res) => {
   const album = new Album({
     title: body.title,
     artist: body.artist,
-    rating: body.rating,
+    released: body.released,
     artistID: artist.id
   })
 
@@ -41,6 +54,19 @@ albumsRouter.post('/', async (req, res) => {
     const savedAlbum = await album.save()
     artist.albums = artist.albums.concat(savedAlbum._id)
     await artist.save()
+
+    const review = new Review({
+      album: savedAlbum._id,
+      user: user.id,
+      rating: body.rating,
+      review: body.review,
+    })
+
+    const savedReview = await review.save()
+
+    savedAlbum.reviews = savedAlbum.reviews.concat(savedReview._id)
+
+    await album.save()
 
     res.status(201).json(savedAlbum)
   }

@@ -11,6 +11,8 @@ const NewAlbumForm = () => {
   const dispatch = useDispatch()
   const title = useField('text')
   const artist = useField('text')
+  const review = useField('text')
+  const released = useField('text')
   const [rating, setRating] = useState(Number)
 
 
@@ -24,15 +26,21 @@ const NewAlbumForm = () => {
     const content = {
       title: title.value,
       artist: artist.value,
-      rating: rating
+      released: released.value,
+      rating: rating,
+      review: review.value
     }
     dispatch(addAlbum(content))
   }
 
-  const formTitle = {...title}
+  const formTitle = { ...title }
   delete formTitle.reset
-  const formArtist = {...artist}
+  const formArtist = { ...artist }
   delete formArtist.reset
+  const formReview = {...review}
+  delete formReview.reset
+  const formReleased = {...released}
+  delete formReleased.reset
 
   const options = [
     { value: 0.5, label: '0.5 - Trash' },
@@ -60,9 +68,17 @@ const NewAlbumForm = () => {
           </Form.Label>
           <Form.Control {...formArtist} />
           <Form.Label>
+            Year released:
+          </Form.Label>
+          <Form.Control {...formReleased}/>
+          <Form.Label>
             Your rating:
           </Form.Label>
-            <Select options={options} onChange={handleChange}/>
+          <Select options={options} onChange={handleChange} />
+          <Form.Label>
+            Your review (optional):
+          </Form.Label>
+          <Form.Control {...formReview} />
           <Button type='submit'>Send</Button>
         </Form.Group>
       </Form>

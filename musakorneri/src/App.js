@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 import Navigation from './components/Navigation'
 import { loggedIn } from './reducers/loginReducer'
 import albumService from './services/albums'
+import reviewService from './services/reviews'
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON)
       dispatch(loggedIn(user))
       albumService.setToken(user.token)
+      reviewService.setToken(user.token)
     }
   })
 

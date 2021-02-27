@@ -6,6 +6,8 @@ import NewAlbumForm from './NewAlbumForm'
 import Album from './Album'
 import Artist from './Artist'
 import Home from './Home'
+import CreateUser from './CreateUser'
+import { Button } from 'react-bootstrap'
 
 const Navigation = () => {
   return (
@@ -15,6 +17,7 @@ const Navigation = () => {
           <Link to='/albums'><button className="btn btn-outline-info">Albums</button></Link>
           <Link to='/artists'><button className="btn btn-outline-info">Artists</button></Link>
           <Link to='/rate'><button className="btn btn-outline-info">Add album</button></Link>
+          <Link to='/register'><button className="btn btn-outline-info">Create account</button></Link>
         </div>
         <Switch>
           <Route path='/albums/:id'>
@@ -31,6 +34,9 @@ const Navigation = () => {
           </Route>
           <Route path='/rate'>
             <NewAlbumForm />
+          </Route>
+          <Route path='/register'>
+            <CreateUser />
           </Route>
           <Route path='/'>
             <Home />

@@ -1,1 +1,1 @@
-GET http://localhost:3001/api/albums/6036baf001627c2cc88ed719
+GET http://localhost:3001/api/albums/6036ba0cdfc8823904220459
