@@ -9,13 +9,12 @@ import { addAlbum } from '../reducers/albumReducer'
 const NewAlbumForm = () => {
 
   const dispatch = useDispatch()
+
   const title = useField('text')
   const artist = useField('text')
   const review = useField('text')
   const released = useField('text')
   const [rating, setRating] = useState(Number)
-
-
 
   const handleChange = event => {
     setRating(event.value);
@@ -62,15 +61,15 @@ const NewAlbumForm = () => {
           <Form.Label>
             Album title:
           </Form.Label>
-          <Form.Control {...formTitle} />
+          <Form.Control {...formTitle} required maxLength='50'/>
           <Form.Label>
             Artist:
           </Form.Label>
-          <Form.Control {...formArtist} />
+          <Form.Control {...formArtist} required maxLength='50'/>
           <Form.Label>
             Year released:
           </Form.Label>
-          <Form.Control {...formReleased}/>
+          <Form.Control {...formReleased} required maxLength='4' max={new Date().getFullYear() + 1}/>
           <Form.Label>
             Your rating:
           </Form.Label>
@@ -78,7 +77,7 @@ const NewAlbumForm = () => {
           <Form.Label>
             Your review (optional):
           </Form.Label>
-          <Form.Control {...formReview} />
+          <Form.Control {...formReview} as='textarea' rows={3} name='review' maxLength='300'/>
           <Button type='submit'>Send</Button>
         </Form.Group>
       </Form>

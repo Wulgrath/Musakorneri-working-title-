@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import LoginForm from './components/LoginForm'
 import Footer from './components/Footer'
 import Navigation from './components/Navigation'
+import Notification from './components/Notification'
 import { loggedIn } from './reducers/loginReducer'
 import albumService from './services/albums'
 import reviewService from './services/reviews'
@@ -12,10 +13,6 @@ import reviewService from './services/reviews'
 const App = () => {
 
   const dispatch = useDispatch()
-  
-  /*useEffect(() => {
-    dispatch(initUsers())
-  }, [dispatch])*/
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -32,7 +29,7 @@ const App = () => {
       <div>
         <h1>Musakorneri</h1>
       </div>
-      <LoginForm />
+      <Notification />
       <Navigation />
       <Footer />
     </div>

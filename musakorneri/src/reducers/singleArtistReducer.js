@@ -2,9 +2,9 @@ import artistService from '../services/artists'
 
 export const initSingleArtist = (id) => {
   return async dispatch => {
-    const artist = await artistService.getOne(id)
+    const artist= await artistService.getOne(id)
     dispatch({
-      type: 'INIT_ONE',
+      type: 'INIT_SINGLE_ARTIST',
       data: artist
     })
   }
@@ -12,9 +12,8 @@ export const initSingleArtist = (id) => {
 
 
 const singleArtistReducer = (state = [], action) => {
-
   switch (action.type) {
-    case 'INIT_ONE':
+    case 'INIT_SINGLE_ARTIST':
       return action.data
       default: return state
   }

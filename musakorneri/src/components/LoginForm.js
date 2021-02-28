@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useField } from '../hooks'
 import { login } from '../reducers/loginReducer'
@@ -9,6 +10,7 @@ import reviewService from '../services/reviews'
 const LoginForm = () => {
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const username = useField('text')
   const password = useField('text')
@@ -23,11 +25,7 @@ const LoginForm = () => {
     dispatch(login(user))
     albumService.setToken(user.token)
     reviewService.setToken(user.token)
-  }
-
-  const logOut = () => {
-    window.localStorage.clear()
-    window.location.reload()
+    history.push('/')
   }
 
   const formUsername = { ...username }
@@ -36,9 +34,9 @@ const LoginForm = () => {
   delete formPassword.reset
 
 
-  if (!loggedUser) {
     return (
       <div>
+        <h1>Log into your account</h1>
         <Form onSubmit={handleLogin}>
           <Form.Group>
             <Form.Label>
@@ -54,14 +52,6 @@ const LoginForm = () => {
         </Form>
       </div>
     )
-  } else {
-    return (
-      <div>
-        <h5>Logged in as {loggedUser.username}</h5>
-        <Button onClick={logOut}>Log Out</Button>
-      </div>
-    )
-  }
 }
 
 export default LoginForm

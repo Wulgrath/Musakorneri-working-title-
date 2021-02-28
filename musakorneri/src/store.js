@@ -7,6 +7,9 @@ import loginReducer from './reducers/loginReducer'
 import reviewReducer from './reducers/reviewReducer'
 import userReducer from './reducers/userReducer'
 import singleAlbumReducer from './reducers/singleAlbumReducer'
+import singleArtistReducer from './reducers/singleArtistReducer'
+import notificationReducer from './reducers/notificationReducer'
+import errorNotificationReducer from './reducers/errorNotificationReducer'
 
 
 const reducer = combineReducers({
@@ -15,7 +18,10 @@ const reducer = combineReducers({
   reviews: reviewReducer,
   loggedUser: loginReducer,
   users: userReducer,
-  singleAlbum: singleAlbumReducer
+  singleAlbum: singleAlbumReducer,
+  singleArtist: singleArtistReducer,
+  notification: notificationReducer,
+  errorNotification: errorNotificationReducer
 })
 
 const store = createStore(reducer, composeWithDevTools(

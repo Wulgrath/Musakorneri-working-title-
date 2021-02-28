@@ -1,4 +1,6 @@
 import loginService from '../services/login'
+import { setNotification } from './notificationReducer'
+import { setErrorNotification } from './errorNotificationReducer'
 
 export const loggedIn = (user) => {
   return async dispatch => {
@@ -20,8 +22,9 @@ export const login = (content) => {
         type: 'LOGIN',
         data: user
       })
+      dispatch(setNotification(`Successfully logged in as ${user.username}`, 5))
     } catch (exception) {
-      console.log(exception)
+      dispatch(setErrorNotification('Invalid username or password', 5))
     }
   }
 }

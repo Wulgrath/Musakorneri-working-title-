@@ -15,24 +15,20 @@ const Album = () => {
     dispatch(initReviews())
   }, [dispatch])
   
-  //hätäkeino, jotta sivua päivittäessä tiedot löytyvät
+  //keino toistaiseksi, jotta sivua päivittäessäkin tiedot löytyvät
   useEffect(() => {
     dispatch(initSingleAlbum(id))
   }, [])
 
   const review = useField('text')
 
-
   //const albums = useSelector(state => state.albums)
   const reviews = useSelector(state => state.reviews)
   const thisAlbum = useSelector(state => state.singleAlbum)
-  
   //thisAlbum = albums.find(n => n.id === id)
 
   const thisAlbumReviews = reviews.filter(n => n.album.id === id)
   const [rating, setRating] = useState(Number)
-
-  console.log(thisAlbumReviews)
   
   const handleChange = event => {
     setRating(event.value);
@@ -56,8 +52,6 @@ const Album = () => {
   const ratingSum = thisAlbumReviews.map(n => n.rating).reduce((a, b) => a + b, 0)
   const average = ratingSum / thisAlbumReviews.map(n => n.rating).length
 
-  //console.log(average)
-
   const options = [
     { value: 0.5, label: '0.5 - Trash' },
     { value: 1, label: '1.0 - Awful' },
@@ -75,7 +69,7 @@ const Album = () => {
     return (
       <div>
         <h1>{thisAlbum.title} by {thisAlbum.artist}</h1>
-        <h2> Average Score: {average}</h2>
+        <h2> Average Rating: {average}</h2>
         <Form onSubmit={sendReview}>
           <Form.Group>
             <Form.Label>
@@ -85,7 +79,7 @@ const Album = () => {
             <Form.Label>
               Your review (optional):
           </Form.Label>
-            <Form.Control {...formReview} />
+            <Form.Control {...formReview} as='textarea' rows={3} maxLength='300'/>
             <Button type='submit'>Send</Button>
           </Form.Group>
         </Form>

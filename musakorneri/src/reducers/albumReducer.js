@@ -21,7 +21,6 @@ export const addAlbum = content => {
 }
 
 const albumReducer = (state = [], action) => {
-  console.log(action)
 
   switch (action.type) {
     case 'INIT_ALL_ALBUMS':

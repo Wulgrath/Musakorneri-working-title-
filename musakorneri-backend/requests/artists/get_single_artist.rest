@@ -1,0 +1,1 @@
+GET http://localhost:3001/api/artists/603a4857f6db423178b599f5

@@ -26,6 +26,7 @@ const CreateUser = () => {
   
   return (
     <div>
+      <h1>Create a new account</h1>
       <Form onSubmit={addUser}>
         <Form.Group>
           <Form.Label>

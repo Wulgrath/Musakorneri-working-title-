@@ -4,7 +4,7 @@ const Home = () => {
 
   return (
     <div>
-      Kotona
+      <h1>Tervetuloa kotisivulle!</h1>
     </div>
   )
 }
