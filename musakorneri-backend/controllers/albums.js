@@ -6,7 +6,7 @@ const Review = require('../models/review')
 const User = require('../models/user')
 
 albumsRouter.get('/', async (req, res) => {
-  const albums = await Album.find({}).populate('artistID', {name: 1}).populate('reviews', {rating: 1})
+  const albums = await Album.find({}).populate('artistID', {name: 1}).populate('reviews', {rating: 1, review: 1, user: 1})
   res.json(albums.map(album => album.toJSON()))
 })
 
@@ -36,6 +36,12 @@ albumsRouter.post('/', async (req, res) => {
   
   //etsitään jo olemassaolevaa artistia, jos ei, lisätään artisti tietokantaan
   let artist = await Artist.findOne({name: body.artist})
+
+  const existingAlbum = await Album.findOne({title: body.title})
+
+  if (artist && existingAlbum) {
+    return res.status(400).json({ error: 'Album already exists by artist'})
+  }
 
   if (!artist) {
     artist = new Artist({ name: body.artist})

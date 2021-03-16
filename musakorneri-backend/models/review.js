@@ -16,6 +16,14 @@ const reviewSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  },
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  updated: {
+    type: Date,
+    default: Date.now
   }
 })
 
@@ -26,6 +34,15 @@ reviewSchema.set('toJSON', {
     delete returnedObject._id
     delete returnedObject.__v
   }
+})
+
+reviewSchema.pre('save', function (next) {
+  now = new Date()
+  this.updated = now
+  if (!this.created) {
+    created = now
+  }
+  next()
 })
 
 module.exports = mongoose.model('Review', reviewSchema)

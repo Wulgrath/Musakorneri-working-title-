@@ -15,17 +15,18 @@ const Album = () => {
     dispatch(initReviews())
   }, [dispatch])
   
-  //keino toistaiseksi, jotta sivua päivittäessäkin tiedot löytyvät
-  useEffect(() => {
+  //yhden levyn tietojen haku
+  /*useEffect(() => {
     dispatch(initSingleAlbum(id))
-  }, [])
+  }, [])*/
 
   const review = useField('text')
 
-  //const albums = useSelector(state => state.albums)
+  const albums = useSelector(state => state.albums)
+  const user = useSelector(state => state.loggedUser)
   const reviews = useSelector(state => state.reviews)
-  const thisAlbum = useSelector(state => state.singleAlbum)
-  //thisAlbum = albums.find(n => n.id === id)
+  //const thisAlbum = useSelector(state => state.singleAlbum)
+  const thisAlbum = albums.find(n => n.id === id)
 
   const thisAlbumReviews = reviews.filter(n => n.album.id === id)
   const [rating, setRating] = useState(Number)
@@ -33,15 +34,29 @@ const Album = () => {
   const handleChange = event => {
     setRating(event.value);
   }
+  
+  
+
 
 
   //Arvostelun lähetys
   const sendReview = async (event) => {
     event.preventDefault()
+
+    const existingReview = thisAlbumReviews.find(review => review.user.username === user.username)
+    
     const content = {
       albumID: thisAlbum.id,
       rating: rating,
       review: review.value
+    }
+    if (user && existingReview) {
+      const reviewWarning = window.confirm(`You have already reviewed this album. Do you wish to update your review?`)
+      if (reviewWarning) {
+        console.log('updated review')
+      } else {
+        console.log('review not updated')
+      }
     }
     dispatch(addReview(content))
   }
@@ -51,6 +66,7 @@ const Album = () => {
 
   const ratingSum = thisAlbumReviews.map(n => n.rating).reduce((a, b) => a + b, 0)
   const average = ratingSum / thisAlbumReviews.map(n => n.rating).length
+  const roundedAverage = Math.round((average + Number.EPSILON) * 100) / 100
 
   const options = [
     { value: 0.5, label: '0.5 - Trash' },
@@ -69,7 +85,7 @@ const Album = () => {
     return (
       <div>
         <h1>{thisAlbum.title} by {thisAlbum.artist}</h1>
-        <h2> Average Rating: {average}</h2>
+        <h2> Average Rating: {roundedAverage}</h2>
         <Form onSubmit={sendReview}>
           <Form.Group>
             <Form.Label>

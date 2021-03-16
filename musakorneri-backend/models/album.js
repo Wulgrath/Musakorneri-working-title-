@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Review = require('./review')
 
 const albumSchema = mongoose.Schema({
   title: {

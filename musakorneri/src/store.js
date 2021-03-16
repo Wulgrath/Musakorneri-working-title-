@@ -10,6 +10,7 @@ import singleAlbumReducer from './reducers/singleAlbumReducer'
 import singleArtistReducer from './reducers/singleArtistReducer'
 import notificationReducer from './reducers/notificationReducer'
 import errorNotificationReducer from './reducers/errorNotificationReducer'
+import searchReducer from './reducers/searchReducer'
 
 
 const reducer = combineReducers({
@@ -21,7 +22,8 @@ const reducer = combineReducers({
   singleAlbum: singleAlbumReducer,
   singleArtist: singleArtistReducer,
   notification: notificationReducer,
-  errorNotification: errorNotificationReducer
+  errorNotification: errorNotificationReducer,
+  search: searchReducer
 })
 
 const store = createStore(reducer, composeWithDevTools(

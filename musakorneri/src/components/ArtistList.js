@@ -6,10 +6,10 @@ import { Table } from 'react-bootstrap'
 
 const ArtistList = () => {
 
-  const dispatch = useDispatch()
+  /*const dispatch = useDispatch()
   useEffect(() => {
     dispatch(initArtists())
-  }, [dispatch])
+  }, [dispatch])*/
 
   const artists = useSelector(state => state.artists)
 
@@ -24,9 +24,6 @@ const ArtistList = () => {
             <td>
               <h4>Albums</h4>
             </td>
-            <td>
-              <h4>Average rating</h4>
-            </td>
           </tr>
           {artists.map(artist =>
             <tr key={artist.id}>
@@ -36,11 +33,7 @@ const ArtistList = () => {
                 </Link>
               </td>
               <td>
-                <Link to={`/artists/`}>
-                  
-                </Link>
-              </td>
-              <td>
+                  {artist.albums.length}
               </td>
             </tr>
           )}

@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { initAlbums } from '../reducers/albumReducer'
 import { Table } from 'react-bootstrap'
+import { addReview } from '../reducers/reviewReducer'
 
 const AlbumList = () => {
 
-  const dispatch = useDispatch()
+  /*const dispatch = useDispatch()
   useEffect(() => {
     dispatch(initAlbums())
-  }, [dispatch])
+  }, [dispatch])*/
 
   const albums = useSelector (state => state.albums)
 
@@ -22,6 +23,9 @@ const AlbumList = () => {
              <h4>Album title</h4> 
             </td>
             <td>
+              <h4>Avg rating</h4>
+            </td>
+            <td>
               <h4>Artist</h4>
             </td>
           </tr>
@@ -31,6 +35,9 @@ const AlbumList = () => {
                 <Link to={`/albums/${album.id}`}>
                 {album.title}
                 </Link>
+              </td>
+              <td>
+              {Math.round((album.reviews.map(review => review.rating).reduce((a, b) => a + b, 0) / album.reviews.map(review => review.rating).length + Number.EPSILON) * 100) / 100}
               </td>
               <td>
                 <Link to={`/artists/${album.artistID.id}`}>

@@ -9,6 +9,7 @@ import Artist from './Artist'
 import Home from './Home'
 import CreateUser from './CreateUser'
 import LoginForm from './LoginForm'
+import Search from './Search'
 
 
 
@@ -24,7 +25,11 @@ const Navigation = () => {
   
   return (
     <div>
-      <div> {loggedUser ? <p>Logged in as user '{loggedUser.username}'</p> : null} </div>
+      <div> {loggedUser ? 
+      <div>
+      <p>Logged in as <b>{loggedUser.username}</b> <button className="btn btn-outline-info" onClick={() => logOut()}>Log out</button></p> 
+      </div>
+      : null} </div>
       
       <Router>
         <div>
@@ -33,8 +38,9 @@ const Navigation = () => {
           <Link to='/artists'><button className="btn btn-outline-info">Artists</button></Link>
           <Link to='/rate'><button className="btn btn-outline-info">Add album</button></Link>
           <Link to='/register'><button className="btn btn-outline-info">Create account</button></Link>
+          <Link to='/search'><button className="btn btn-outline-info">Search</button></Link>
           { loggedUser ? 
-          <button className="btn btn-outline-info" onClick={() => logOut()}>Log out</button> : 
+          null : 
           <Link to='/login'><button className="btn btn-outline-info">Log in</button></Link>}
         </div>
         <Switch>
@@ -58,6 +64,9 @@ const Navigation = () => {
           </Route>
           <Route path='/login'>
             <LoginForm />
+          </Route>
+          <Route path='/search'>
+            <Search />
           </Route>
           <Route path='/'>
             <Home />

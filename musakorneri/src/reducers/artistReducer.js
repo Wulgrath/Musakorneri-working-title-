@@ -4,7 +4,7 @@ export const initArtists = () => {
   return async dispatch => {
     const artists = await artistService.getAll()
     dispatch({
-      type: 'INIT',
+      type: 'INIT_ALL_ARTISTS',
       data: artists
     })
   }
@@ -12,7 +12,7 @@ export const initArtists = () => {
 
 const artistReducer = (state = [], action) => {
   switch (action.type) {
-    case 'INIT':
+    case 'INIT_ALL_ARTISTS':
       return action.data
       default: return state
   }
