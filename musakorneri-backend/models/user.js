@@ -7,6 +7,9 @@ const userSchema = mongoose.Schema({
       minlength: 3,
       unique: true
     },
+    username_lowerCase: {
+      type: String
+    },
     passwordHash: String,
     reviews: [
       {
@@ -26,6 +29,11 @@ userSchema.set('toJSON', {
       // the passwordHash should not be revealed
       delete returnedObject.passwordHash
     }
+  })
+
+  userSchema.pre('save', function (next) {
+    this.username_lowerCase = this.username.toLowerCase()
+    next()
   })
 
   module.exports = mongoose.model('User', userSchema)

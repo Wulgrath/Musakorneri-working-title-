@@ -5,6 +5,9 @@ const artistSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  name_lowerCase: {
+    type: String
+  },
   albums: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -20,6 +23,11 @@ artistSchema.set('toJSON', {
     delete returnedObject._id
     delete returnedObject.__v
   }
+})
+
+artistSchema.pre('save', function (next) {
+  this.name_lowerCase = this.name.toLowerCase()
+  next()
 })
 
 module.exports = mongoose.model('Artist', artistSchema)

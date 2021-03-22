@@ -59,7 +59,7 @@ const Artist = () => {
   } else {
     return (
       <div>
-        älä päivitä
+        404: Not Found.
       </div>
     )
   }

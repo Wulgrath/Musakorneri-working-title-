@@ -10,6 +10,15 @@ export const initArtists = () => {
   }
 }
 
+/*export const updateArtist = (newAlbum) => {
+  return async dispatch => {
+    dispatch({
+      type: 'UPDATE',
+      data: newAlbum
+    })
+  }
+}*/
+
 const artistReducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_ALL_ARTISTS':

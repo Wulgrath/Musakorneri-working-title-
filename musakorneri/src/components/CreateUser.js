@@ -36,7 +36,7 @@ const CreateUser = () => {
           <Form.Label>
             Password:
           </Form.Label>
-          <Form.Control {...formPassword}/>
+          <Form.Control {...formPassword} type='password'/>
           <Button type="submit">Create account</Button>
         </Form.Group>
       </Form>

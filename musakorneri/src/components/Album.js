@@ -4,7 +4,7 @@ import { useField } from '../hooks'
 import { useSelector, useDispatch } from 'react-redux'
 import { Form, Button, Table } from 'react-bootstrap'
 import Select from 'react-select'
-import { addReview, initReviews } from '../reducers/reviewReducer'
+import { addReview, initReviews, updateReview } from '../reducers/reviewReducer'
 import { initSingleAlbum } from '../reducers/singleAlbumReducer'
 
 const Album = () => {
@@ -50,15 +50,17 @@ const Album = () => {
       rating: rating,
       review: review.value
     }
-    if (user && existingReview) {
+    if (existingReview) {
       const reviewWarning = window.confirm(`You have already reviewed this album. Do you wish to update your review?`)
       if (reviewWarning) {
+        dispatch(updateReview(existingReview.id, content))
         console.log('updated review')
       } else {
         console.log('review not updated')
       }
+    } else {
+      dispatch(addReview(content))
     }
-    dispatch(addReview(content))
   }
 
   const formReview = { ...review }
@@ -131,7 +133,7 @@ const Album = () => {
   } else {
     return (
       <div>
-        <h1>Älä päivitä sivua, ei toimi</h1>
+        <h1>Try refreshing</h1>
       </div>
     )
   }

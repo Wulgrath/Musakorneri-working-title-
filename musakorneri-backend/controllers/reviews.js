@@ -27,10 +27,10 @@ reviewsRouter.post('/', async (req, res) => {
   const album = await Album.findById(body.albumID)
 
   //tarkistetaan mikäli arvostelu on jo olemassa käyttäjältä kyseiseen levyyn
-  const existingUserReview = await Review.findOne({user: user.id, album: album.id})
+  const existingUserReview = await Review.findOne({ user: user.id, album: album.id })
 
   if (existingUserReview) {
-    return res.status(403).json({ error: 'Album already reviewed by this user'})
+    return res.status(403).json({ error: 'Album already reviewed by this user' })
   }
 
   const review = new Review({
@@ -45,6 +45,52 @@ reviewsRouter.post('/', async (req, res) => {
     const savedReview = await review.save()
 
     album.reviews = album.reviews.concat(savedReview._id)
+    //tänne getRating
+
+    await album.save()
+
+    user.reviews = user.reviews.concat(savedReview._id)
+    await user.save()
+
+    res.status(201).json(savedReview)
+  } catch (exception) {
+    res.status(400).json(exception)
+  }
+})
+
+reviewsRouter.put('/:id', async (req, res) => {
+  const body = req.body
+
+  const decodedToken = jwt.verify(req.token, process.env.SECRET)
+  if (!req.token || !decodedToken.id) {
+    return res.status(401).json({ error: 'token missing or invalid' })
+  }
+
+  //Tähän käyttäjän ja arvostelun lisänneen käyttäjän matchauksen tarkastus
+  /*const user = await User.findById(decodedToken.id)
+  console.log(user.id)
+  const reviewToUpdate = await Review.findById(req.params.id)
+  console.log(reviewToUpdate.user)
+
+  if (user.id === reviewToUpdate.user) {
+    return res.status(401).json({ error: 'User not permitted to update this review'})
+  }*/
+
+  const review = {
+    rating: body.rating,
+    review: body.review
+  }
+
+  try {
+    const updatedReview = await Review.findByIdAndUpdate(req.params.id, review, { new: true })
+    res.status(201).json(updatedReview)
+  } catch (exception) {
+    res.status(400).json(exception)
+  }
+})
+
+module.exports = reviewsRouter
+
 
     /*const getRating = (id) => {
 
@@ -68,16 +114,3 @@ reviewsRouter.post('/', async (req, res) => {
     //getRating(album.id)
 
     //album.ratingAvg = avgRating*/
-
-    await album.save()
-
-    user.reviews = user.reviews.concat(savedReview._id)
-    await user.save()
-
-    res.status(201).json(savedReview)
-  } catch (exception) {
-    res.status(400).json(exception)
-  }
-})
-
-module.exports = reviewsRouter

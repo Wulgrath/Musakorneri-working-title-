@@ -35,9 +35,9 @@ albumsRouter.post('/', async (req, res) => {
   const user = await User.findById(decodedToken.id)
   
   //etsitään jo olemassaolevaa artistia, jos ei, lisätään artisti tietokantaan
-  let artist = await Artist.findOne({name: body.artist})
+  let artist = await Artist.findOne({name_lowerCase: body.artist.toLowerCase()})
 
-  const existingAlbum = await Album.findOne({title: body.title})
+  const existingAlbum = await Album.findOne({title_lowerCase: body.title.toLowerCase()})
 
   if (artist && existingAlbum) {
     return res.status(400).json({ error: 'Album already exists by artist'})
@@ -71,8 +71,10 @@ albumsRouter.post('/', async (req, res) => {
     const savedReview = await review.save()
 
     savedAlbum.reviews = savedAlbum.reviews.concat(savedReview._id)
-
     await album.save()
+
+    user.reviews = user.reviews.concat(savedReview._id)
+    await user.save()
 
     res.status(201).json(savedAlbum)
   }

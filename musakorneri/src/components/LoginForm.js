@@ -46,7 +46,7 @@ const LoginForm = () => {
             <Form.Label>
               password:
             </Form.Label>
-            <Form.Control {...formPassword} />
+            <Form.Control {...formPassword} type='password'/>
             <Button id='loginButton' type='submit'>Login</Button>
           </Form.Group>
         </Form>

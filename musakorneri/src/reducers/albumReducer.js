@@ -1,6 +1,7 @@
 import albumService from '../services/albums'
 import { setNotification } from './notificationReducer'
 import { setErrorNotification } from './errorNotificationReducer'
+import { initArtists } from './artistReducer'
 
 
 
@@ -23,6 +24,7 @@ export const addAlbum = content => {
         data: newAlbum
       })
       dispatch(setNotification(`Successfully added new album '${newAlbum.title}'`, 5))
+      dispatch(initArtists())
     } catch (exception) {
       dispatch(setErrorNotification('Unable to add album, check if it already exists', 5))
     }
