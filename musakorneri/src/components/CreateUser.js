@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { useField } from '../hooks'
 import { Form, Button } from 'react-bootstrap'
 import { createUser } from '../reducers/userReducer'
@@ -7,6 +8,7 @@ import { createUser } from '../reducers/userReducer'
 const CreateUser = () => {
 
   const dispatch = useDispatch()
+  const history = useHistory()
   const username = useField('text')
   const password = useField('text')
 
@@ -17,6 +19,7 @@ const CreateUser = () => {
       password: password.value
     }
     dispatch(createUser(content))
+    history.push('/login')
   }
 
   const formUsername = {...username}
