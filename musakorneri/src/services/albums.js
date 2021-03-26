@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3001/api/albums'
+const baseUrl = '/api/albums'
 
 let token = null
 
