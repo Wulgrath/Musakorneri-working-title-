@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-musakorneri-dev-145210-authRole",
+      "UnauthRoleArn": "arn:aws:iam::077325349056:role/amplify-musakorneri-dev-145210-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::077325349056:role/amplify-musakorneri-dev-145210-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-musakorneri-dev-145210-deployment",
+      "UnauthRoleName": "amplify-musakorneri-dev-145210-unauthRole",
+      "StackName": "amplify-musakorneri-dev-145210",
+      "StackId": "arn:aws:cloudformation:us-east-1:077325349056:stack/amplify-musakorneri-dev-145210/179e4750-8e32-11eb-badf-1201663355d3",
+      "AmplifyAppId": "dcxutrv3yuh8z"
+    }
+  }
+}
