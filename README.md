@@ -9,3 +9,11 @@ Fullstackina tekemäni levyarvostelusovellus. Käytössä mm. React, Node.js ja 
 ### Komponentit
 ### Reititys
 ### React-bootstrap
+
+## Back-end
+
+### Node.js
+### Express
+### REST API
+### Tietokanta (MongoDB)
+### JWT-authentikaatio
