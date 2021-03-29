@@ -3,4 +3,9 @@ Fullstackina tekemäni levyarvostelusovellus. Käytössä mm. React, Node.js ja 
 
 ## Front End
 
-### React ### Redux
+### React 
+### Redux
+### Servicet
+### Komponentit
+### Reititys
+### React-bootstrap
