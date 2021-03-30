@@ -1,7 +1,6 @@
 # Musakorneri-working-title-
 
 ## Linkki sovellukseen: https://guarded-harbor-29430.herokuapp.com/ (varhainen testiversio)
-Fullstackina tekemäni levyarvostelusovellus. Käytössä mm. React, Node.js ja mongoDB. (Projekti edelleen työn alla)
 
 
 ## Front End
