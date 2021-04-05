@@ -4,7 +4,7 @@ import { useField } from '../hooks'
 import { useSelector, useDispatch } from 'react-redux'
 import { Form, Button, Table } from 'react-bootstrap'
 import Select from 'react-select'
-import { addReview, initReviews, updateReview } from '../reducers/reviewReducer'
+import { addReview, initReviews, updateReview, deleteReview } from '../reducers/reviewReducer'
 import { initSingleAlbum } from '../reducers/singleAlbumReducer'
 
 const Album = () => {
@@ -14,7 +14,7 @@ const Album = () => {
   useEffect(() => {
     dispatch(initReviews())
   }, [dispatch])
-  
+
   //yhden levyn tietojen haku
   /*useEffect(() => {
     dispatch(initSingleAlbum(id))
@@ -30,28 +30,24 @@ const Album = () => {
 
   const thisAlbumReviews = reviews.filter(n => n.album.id === id)
   const [rating, setRating] = useState(Number)
-  
+
   const handleChange = event => {
     setRating(event.value);
   }
-  
-  
-
-
 
   //Arvostelun lähetys
   const sendReview = async (event) => {
     event.preventDefault()
 
     const existingReview = thisAlbumReviews.find(review => review.user.username === user.username)
-    
+
     const content = {
       albumID: thisAlbum.id,
       rating: rating,
       review: review.value
     }
     if (existingReview) {
-      const reviewWarning = window.confirm(`You have already reviewed this album. Do you wish to update your review?`)
+      const reviewWarning = window.confirm(`You have already rated this album. Do you wish to update your review?`)
       if (reviewWarning) {
         dispatch(updateReview(existingReview.id, content))
         console.log('updated review')
@@ -60,6 +56,13 @@ const Album = () => {
       }
     } else {
       dispatch(addReview(content))
+    }
+  }
+
+  const removeReview = (id) => {
+    const deleteWarning = window.confirm(`Remove your review?`)
+    if (deleteWarning) {
+      dispatch(deleteReview(id))
     }
   }
 
@@ -97,7 +100,7 @@ const Album = () => {
             <Form.Label>
               Your review (optional):
           </Form.Label>
-            <Form.Control {...formReview} as='textarea' rows={3} maxLength='300'/>
+            <Form.Control {...formReview} as='textarea' rows={3} maxLength='300' />
             <Button type='submit'>Send</Button>
           </Form.Group>
         </Form>
@@ -113,6 +116,7 @@ const Album = () => {
               <td>
                 <h4>User</h4>
               </td>
+              <td></td>
             </tr>
             {thisAlbumReviews.map(review =>
               <tr key={review.id}>
@@ -124,6 +128,12 @@ const Album = () => {
                 </td>
                 <td>
                   {review.user.username}
+                </td>
+                <td>
+                  {user ?
+                    user.username === review.user.username ?
+                      <Button variant='secondary' onClick={() => removeReview(review.id)}>X</Button> : null
+                    : null}
                 </td>
               </tr>)}
           </tbody>

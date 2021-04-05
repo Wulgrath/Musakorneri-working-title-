@@ -1,6 +1,8 @@
 import loginService from '../services/login'
 import { setNotification } from './notificationReducer'
 import { setErrorNotification } from './errorNotificationReducer'
+import albumService from '../services/albums'
+import reviewService from '../services/reviews'
 
 export const loggedIn = (user) => {
   return async dispatch => {
@@ -22,6 +24,8 @@ export const login = (content) => {
         type: 'LOGIN',
         data: user
       })
+      albumService.setToken(user.token)
+      reviewService.setToken(user.token)
       dispatch(setNotification(`Successfully logged in as ${user.username}`, 5))
     } catch (exception) {
       dispatch(setErrorNotification('Invalid username or password', 5))

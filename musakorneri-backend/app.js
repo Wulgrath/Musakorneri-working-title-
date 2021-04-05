@@ -13,7 +13,7 @@ const { tokenExtractor } = require('./utils/tokenExtractor')
 
 
 
-const mongoUrl = config.MONGODB_URI
+const mongoUrl = config.TEST_MONGODB_URI
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
     .then(() => {
         console.log('connected to MongoDB')

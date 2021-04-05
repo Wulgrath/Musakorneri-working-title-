@@ -66,15 +66,13 @@ reviewsRouter.put('/:id', async (req, res) => {
     return res.status(401).json({ error: 'token missing or invalid' })
   }
 
-  //Tähän käyttäjän ja arvostelun lisänneen käyttäjän matchauksen tarkastus
-  /*const user = await User.findById(decodedToken.id)
-  console.log(user.id)
+  //Tarkastetaan että arvostelun lisääjä ja päivittäjä matchaavat
+  const user = await User.findById(decodedToken.id)
   const reviewToUpdate = await Review.findById(req.params.id)
-  console.log(reviewToUpdate.user)
 
-  if (user.id === reviewToUpdate.user) {
+  if (user.id.toString() !== reviewToUpdate.user.toString()) {
     return res.status(401).json({ error: 'User not permitted to update this review'})
-  }*/
+  }
 
   const review = {
     rating: body.rating,
@@ -84,6 +82,34 @@ reviewsRouter.put('/:id', async (req, res) => {
   try {
     const updatedReview = await Review.findByIdAndUpdate(req.params.id, review, { new: true })
     res.status(201).json(updatedReview)
+  } catch (exception) {
+    res.status(400).json(exception)
+  }
+})
+
+reviewsRouter.delete('/:id', async (req, res) => {
+
+  const decodedToken = jwt.verify(req.token, process.env.SECRET)
+
+  if (!req.token || !decodedToken.id) {
+    return res.status(401).json({ error: 'token missing or invalid'})
+  }
+
+  //Tarkastetaan että arvostelun lisääjä ja poistaja matchaavat
+  const user = await User.findById(decodedToken.id)
+  const review = await Review.findById(req.params.id)
+
+  if (!review) {
+    return res.status(404).json({ error: 'Review not found'})
+  }
+
+  if (user.id.toString() !== review.user.toString()) {
+    return res.status(403).json({ error: 'Invalid user for this review'})
+  }
+
+  try {
+    await Review.findByIdAndRemove(req.params.id)
+    res.status(204).end()
   } catch (exception) {
     res.status(400).json(exception)
   }

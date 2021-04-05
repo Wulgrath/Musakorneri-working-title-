@@ -25,7 +25,6 @@ const LoginForm = () => {
     dispatch(login(user))
     albumService.setToken(user.token)
     reviewService.setToken(user.token)
-    history.push('/')
   }
 
   const formUsername = { ...username }

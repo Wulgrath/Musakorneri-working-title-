@@ -24,7 +24,7 @@ export const addAlbum = content => {
         data: newAlbum
       })
       dispatch(setNotification(`Successfully added new album '${newAlbum.title}'`, 5))
-      dispatch(initArtists())
+      dispatch(initArtists(), initAlbums())
     } catch (exception) {
       dispatch(setErrorNotification('Unable to add album, check if it already exists', 5))
     }

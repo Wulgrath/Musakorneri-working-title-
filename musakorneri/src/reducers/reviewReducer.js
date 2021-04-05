@@ -1,6 +1,7 @@
 import reviewService from '../services/reviews'
 import { setNotification } from './notificationReducer'
 import { setErrorNotification } from './errorNotificationReducer'
+import { initAlbums } from './albumReducer'
 
 export const addReview = review => {
   return async dispatch => {
@@ -55,6 +56,16 @@ export const updateReview = (id, content) => {
   }
 }
 
+export const deleteReview = (id) => {
+  return async dispatch => {
+    await reviewService.remove(id)
+    dispatch({
+      type: 'DELETE',
+      data: id
+    })
+  }
+}
+
 const reviewReducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_ALL_REVIEWS':
@@ -72,6 +83,8 @@ const reviewReducer = (state = [], action) => {
       return state.map(review =>
         review.id !== id ? review : updatedReview
       )
+    case 'DELETE':
+      return state.filter(n => n.id !== action.data)
     default: return state
   }
 }

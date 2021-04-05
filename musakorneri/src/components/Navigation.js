@@ -31,7 +31,7 @@ const Navigation = () => {
       </div>
       : null} </div>
       
-      <Router>
+      <Router basename='/'>
         <div>
           <Link to='/'><button className="btn btn-outline-info">Home</button></Link>
           <Link to='/albums'><button className="btn btn-outline-info">Albums</button></Link>

@@ -1,0 +1,2 @@
+DELETE http://localhost:3001/api/reviews/6069d8b3bf9fb22a0c3df991
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRhbm55eSIsImlkIjoiNjA2MzE5OGJhNzlmMzQzYTljNGUxNmY2IiwiaWF0IjoxNjE3NTQ3NjUzfQ.iW3uYu9PzmhkEgKEXh0mD2TM5MA7ZbJyglzOswlan2w
