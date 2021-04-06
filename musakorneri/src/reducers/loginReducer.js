@@ -3,6 +3,7 @@ import { setNotification } from './notificationReducer'
 import { setErrorNotification } from './errorNotificationReducer'
 import albumService from '../services/albums'
 import reviewService from '../services/reviews'
+import { history } from '../components/Navigation'
 
 export const loggedIn = (user) => {
   return async dispatch => {
@@ -27,6 +28,7 @@ export const login = (content) => {
       albumService.setToken(user.token)
       reviewService.setToken(user.token)
       dispatch(setNotification(`Successfully logged in as ${user.username}`, 5))
+      history.push('/')
     } catch (exception) {
       dispatch(setErrorNotification('Invalid username or password', 5))
     }

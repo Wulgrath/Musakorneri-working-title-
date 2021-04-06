@@ -16,7 +16,7 @@ const LoginForm = () => {
   const password = useField('text')
   const loggedUser = useSelector(state => state.loggedUser)
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault()
     const user = ({
       username: username.value,

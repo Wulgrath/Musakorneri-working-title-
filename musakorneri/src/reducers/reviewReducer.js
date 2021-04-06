@@ -1,7 +1,7 @@
 import reviewService from '../services/reviews'
 import { setNotification } from './notificationReducer'
 import { setErrorNotification } from './errorNotificationReducer'
-import { initAlbums } from './albumReducer'
+//import { updateAlbum } from './albumReducer'
 
 export const addReview = review => {
   return async dispatch => {
@@ -9,8 +9,10 @@ export const addReview = review => {
       const newReview = await reviewService.create(review)
       dispatch({
         type: 'NEW_REVIEW',
-        data: newReview
+        data:  newReview
       })
+      //väliaikainen lisäys, jotta arvostelut päivittyvät lisätessä
+      dispatch(initReviews())
       dispatch(setNotification('Review successfully added', 5))
     } catch (exception) {
       dispatch(setErrorNotification('Error sending review', 5))
@@ -28,7 +30,8 @@ export const initReviews = () => {
   }
 }
 
-export const initAlbumReviews = (id) => {
+//yksittäisen levyn arvostelujen haku
+/*export const initAlbumReviews = (id) => {
   return async dispatch => {
     const albumReviews = await reviewService.getAlbumReviews(id)
     dispatch({
@@ -36,7 +39,7 @@ export const initAlbumReviews = (id) => {
       data: albumReviews
     })
   }
-}
+}*/
 
 export const updateReview = (id, content) => {
   const newReview = {
@@ -70,8 +73,8 @@ const reviewReducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_ALL_REVIEWS':
       return action.data
-    case 'INIT_ALBUMREVIEWS':
-      return action.data
+    /*case 'INIT_ALBUMREVIEWS':
+      return action.data*/
     case 'NEW_REVIEW':
       return [...state, action.data]
     case 'UPDATE':

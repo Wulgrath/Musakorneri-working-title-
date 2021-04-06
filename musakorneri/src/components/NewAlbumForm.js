@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { useField } from '../hooks'
 import { Form, Button } from 'react-bootstrap'
 import Select from 'react-select'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { addAlbum } from '../reducers/albumReducer'
 
 
@@ -15,6 +16,7 @@ const NewAlbumForm = () => {
   const review = useField('text')
   const released = useField('text')
   const [rating, setRating] = useState(Number)
+  const loggedUser = useSelector(state => state.loggedUser)
 
   const handleChange = event => {
     setRating(event.value);
@@ -53,6 +55,14 @@ const NewAlbumForm = () => {
     { value: 4.5, label: '4.5 - Superb' },
     { value: 5, label: '5 - A Classic' }
   ]
+
+  if (!loggedUser) {
+    return (
+      <div>
+        <p>You must be logged in to add an album. <Link to ={'/login'}>Login</Link> or <Link to='/register'>Create a new account</Link></p>
+      </div>
+    )
+  }
 
   return (
     <div>

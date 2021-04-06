@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useField } from '../hooks'
 import { useSelector, useDispatch } from 'react-redux'
 import { Form, Button, Table } from 'react-bootstrap'
 import Select from 'react-select'
 import { addReview, initReviews, updateReview, deleteReview } from '../reducers/reviewReducer'
 import { initSingleAlbum } from '../reducers/singleAlbumReducer'
+
 
 const Album = () => {
 
@@ -50,7 +51,7 @@ const Album = () => {
       const reviewWarning = window.confirm(`You have already rated this album. Do you wish to update your review?`)
       if (reviewWarning) {
         dispatch(updateReview(existingReview.id, content))
-        console.log('updated review')
+        review.reset()
       } else {
         console.log('review not updated')
       }
@@ -59,6 +60,7 @@ const Album = () => {
     }
   }
 
+  //arvostelun poisto
   const removeReview = (id) => {
     const deleteWarning = window.confirm(`Remove your review?`)
     if (deleteWarning) {
@@ -91,7 +93,7 @@ const Album = () => {
       <div>
         <h1>{thisAlbum.title} by {thisAlbum.artist}</h1>
         <h2> Average Rating: {roundedAverage}</h2>
-        <Form onSubmit={sendReview}>
+        { user ? <Form onSubmit={sendReview}>
           <Form.Group>
             <Form.Label>
               Your rating:
@@ -103,7 +105,7 @@ const Album = () => {
             <Form.Control {...formReview} as='textarea' rows={3} maxLength='300' />
             <Button type='submit'>Send</Button>
           </Form.Group>
-        </Form>
+        </Form> : <p>You must be logged in to add a review. <Link to ={'/login'}>Login</Link> or <Link to='/register'>Create a new account</Link></p>}
         <Table striped>
           <tbody>
             <tr>
@@ -143,7 +145,7 @@ const Album = () => {
   } else {
     return (
       <div>
-        <h1>Try refreshing</h1>
+        <p>404: Not found</p>
       </div>
     )
   }

@@ -1,5 +1,7 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
+import { Router } from 'react-router'
+import { createBrowserHistory } from 'history'
 import { useSelector } from 'react-redux'
 import AlbumList from './AlbumList'
 import ArtistList from './ArtistList'
@@ -11,7 +13,7 @@ import CreateUser from './CreateUser'
 import LoginForm from './LoginForm'
 import Search from './Search'
 
-
+export const history = createBrowserHistory()
 
 const Navigation = () => {
 
@@ -31,17 +33,20 @@ const Navigation = () => {
       </div>
       : null} </div>
       
-      <Router basename='/'>
+      <Router basename='/' history={history}>
         <div>
           <Link to='/'><button className="btn btn-outline-info">Home</button></Link>
           <Link to='/albums'><button className="btn btn-outline-info">Albums</button></Link>
           <Link to='/artists'><button className="btn btn-outline-info">Artists</button></Link>
           <Link to='/rate'><button className="btn btn-outline-info">Add album</button></Link>
-          <Link to='/register'><button className="btn btn-outline-info">Create account</button></Link>
           <Link to='/search'><button className="btn btn-outline-info">Search</button></Link>
+          
           { loggedUser ? 
           null : 
-          <Link to='/login'><button className="btn btn-outline-info">Log in</button></Link>}
+          <div>
+          <Link to='/register'><button className="btn btn-outline-info">Create account</button></Link>
+          <Link to='/login'><button className="btn btn-outline-info">Log in</button></Link>
+          </div>}
         </div>
         <Switch>
           <Route path='/albums/:id'>
