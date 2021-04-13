@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { useField } from '../hooks'
-import { Form, Button } from 'react-bootstrap'
 import Select from 'react-select'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { addAlbum } from '../reducers/albumReducer'
-
+import { TextField, Button, MenuItem } from '@material-ui/core'
 
 const NewAlbumForm = () => {
 
@@ -15,11 +14,11 @@ const NewAlbumForm = () => {
   const artist = useField('text')
   const review = useField('text')
   const released = useField('text')
-  const [rating, setRating] = useState(Number)
+  const [rating, setRating] = useState("")
   const loggedUser = useSelector(state => state.loggedUser)
 
   const handleChange = event => {
-    setRating(event.value);
+    setRating(event.target.value);
   }
 
   const addRating = async (event) => {
@@ -38,9 +37,9 @@ const NewAlbumForm = () => {
   delete formTitle.reset
   const formArtist = { ...artist }
   delete formArtist.reset
-  const formReview = {...review}
+  const formReview = { ...review }
   delete formReview.reset
-  const formReleased = {...released}
+  const formReleased = { ...released }
   delete formReleased.reset
 
   const options = [
@@ -59,38 +58,38 @@ const NewAlbumForm = () => {
   if (!loggedUser) {
     return (
       <div>
-        <p>You must be logged in to add an album. <Link to ={'/login'}>Login</Link> or <Link to='/register'>Create a new account</Link></p>
+        <p>You must be logged in to add an album. <Link to={'/login'}>Login</Link> or <Link to='/register'>Create a new account</Link></p>
       </div>
     )
   }
 
   return (
     <div>
-      <Form onSubmit={addRating}>
-        <Form.Group>
-          <Form.Label>
-            Album title:
-          </Form.Label>
-          <Form.Control {...formTitle} required maxLength='50'/>
-          <Form.Label>
-            Artist:
-          </Form.Label>
-          <Form.Control {...formArtist} required maxLength='50'/>
-          <Form.Label>
-            Year released:
-          </Form.Label>
-          <Form.Control {...formReleased} required maxLength='4' max={new Date().getFullYear() + 1}/>
-          <Form.Label>
-            Your rating:
-          </Form.Label>
-          <Select options={options} onChange={handleChange} />
-          <Form.Label>
-            Your review (optional):
-          </Form.Label>
-          <Form.Control {...formReview} as='textarea' rows={3} name='review' maxLength='300'/>
-          <Button type='submit'>Send</Button>
-        </Form.Group>
-      </Form>
+      <h2>Add a new album</h2>
+      <form onSubmit={addRating}>
+        <div>
+          <div>
+            <TextField {...formTitle} required maxLength='50' label="Album title" variant="outlined" />
+          </div>
+          <div>
+            <TextField {...formArtist} required maxLength='50' label="Artist" variant="outlined" />
+          </div>
+          <div>
+            <TextField {...formReleased} required maxLength='4' label="Year released" variant="outlined" max={new Date().getFullYear() + 1} />
+          </div>
+          <TextField select label="Rating" required onChange={handleChange} value={rating} variant="outlined" helperText="Select your rating">
+                {options.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+          <div>
+            <TextField {...formReview} rows={4} maxLength='300' label="Your review (optional)" multiline variant="outlined" />
+          </div>
+          <Button variant="contained" color="primary" type='submit'>Send</Button>
+        </div>
+      </form>
     </div>
   )
 

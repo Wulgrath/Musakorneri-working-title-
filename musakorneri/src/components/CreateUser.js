@@ -2,8 +2,8 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { useField } from '../hooks'
-import { Form, Button } from 'react-bootstrap'
 import { createUser } from '../reducers/userReducer'
+import { Button, TextField} from '@material-ui/core'
 
 const CreateUser = () => {
 
@@ -22,28 +22,24 @@ const CreateUser = () => {
     history.push('/login')
   }
 
-  const formUsername = {...username}
+  const formUsername = { ...username }
   delete formUsername.reset
-  const formPassword = {...password}
+  const formPassword = { ...password }
   delete formPassword.reset
-  
+
   return (
     <div>
       <h1>Create a new account</h1>
-      <Form onSubmit={addUser}>
-        <Form.Group>
-          <Form.Label>
-            Username:
-          </Form.Label>
-          <Form.Control {...formUsername}/>
-          <Form.Label>
-            Password:
-          </Form.Label>
-          <Form.Control {...formPassword} type='password'/>
-          <Button type="submit">Create account</Button>
-        </Form.Group>
-      </Form>
-    </div>
+      <form onSubmit={addUser}>
+        <div>
+          <TextField label="username" {...formUsername} variant="outlined" />
+        </div>
+        <div>
+          <TextField label="password" {...formPassword} type="password" variant="outlined" />
+        </div>
+        <Button variant="contained" color="primary" id='loginButton' type='submit'>Create account</Button>
+      </form>
+    </div >
   )
 
 }

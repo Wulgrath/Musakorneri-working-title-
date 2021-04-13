@@ -9,18 +9,23 @@ import albumService from './services/albums'
 import reviewService from './services/reviews'
 import { initAlbums } from './reducers/albumReducer'
 import { initArtists } from './reducers/artistReducer'
+import { initReviews } from './reducers/reviewReducer'
+import { Container, BottomNavigation } from '@material-ui/core'
 
 
 const App = () => {
 
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
-    dispatch(initAlbums(), dispatch(initArtists()))
+    dispatch(initAlbums(),
+    dispatch(initArtists(),
+    dispatch(initReviews())
+    ))
   }, [dispatch])
 
-  
-  
+
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
@@ -32,14 +37,16 @@ const App = () => {
   })
 
   return (
-    <div className='container'>
+    <Container>
       <div>
         <h1>Musakorneri</h1>
       </div>
       <Notification />
       <Navigation />
-      <Footer />
-    </div>
+      <BottomNavigation>
+        <Footer />
+      </BottomNavigation>
+    </Container>
   )
 }
 

@@ -2,8 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { initAlbums, initArtists } from '../reducers/artistReducer'
-import { Table } from 'react-bootstrap'
-
+import { TableContainer, Table, TableBody, TableRow, TableCell, Paper } from '@material-ui/core'
 const ArtistList = () => {
 
   /*const dispatch = useDispatch()
@@ -15,30 +14,32 @@ const ArtistList = () => {
 
   return (
     <div>
-      <Table striped>
-        <tbody>
-          <tr>
-            <td>
-              <h4>Artist name</h4>
-            </td>
-            <td>
-              <h4>Albums</h4>
-            </td>
-          </tr>
-          {artists.map(artist =>
-            <tr key={artist.id}>
-              <td>
-                <Link to={`/artists/${artist.id}`}>
-                  {artist.name}
-                </Link>
-              </td>
-              <td>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <h3>Artist name</h3>
+              </TableCell>
+              <TableCell>
+                <h3>Albums</h3>
+              </TableCell>
+            </TableRow>
+            {artists.map(artist =>
+              <TableRow key={artist.id}>
+                <TableCell>
+                  <Link to={`/artists/${artist.id}`}>
+                    {artist.name}
+                  </Link>
+                </TableCell>
+                <TableCell>
                   {artist.albums.length}
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   )
 }

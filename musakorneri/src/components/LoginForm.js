@@ -1,11 +1,12 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { useField } from '../hooks'
 import { login } from '../reducers/loginReducer'
 import albumService from '../services/albums'
 import reviewService from '../services/reviews'
+import { Button, TextField} from '@material-ui/core'
 
 const LoginForm = () => {
 
@@ -36,19 +37,15 @@ const LoginForm = () => {
     return (
       <div>
         <h1>Log into your account</h1>
-        <Form onSubmit={handleLogin}>
-          <Form.Group>
-            <Form.Label>
-              username:
-            </Form.Label>
-            <Form.Control {...formUsername} />
-            <Form.Label>
-              password:
-            </Form.Label>
-            <Form.Control {...formPassword} type='password'/>
-            <Button id='loginButton' type='submit'>Login</Button>
-          </Form.Group>
-        </Form>
+        <form onSubmit={handleLogin}>
+          <div>
+            <TextField label="username" {...formUsername} variant="outlined"/>
+          </div>
+          <div>
+            <TextField label="password" {...formPassword} type="password" variant="outlined"/>
+            </div>
+            <Button variant="contained" color="primary" id='loginButton' type='submit'>Login</Button>
+        </form>
       </div>
     )
 }

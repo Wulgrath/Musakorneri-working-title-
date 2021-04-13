@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { Table } from 'react-bootstrap'
 import { initAlbums } from '../reducers/albumReducer'
 import { initSingleArtist } from '../reducers/singleArtistReducer'
+import { TableContainer, Table, TableBody, TableRow, TableCell, Button, Paper } from '@material-ui/core'
 
 
 const Artist = () => {
 
   const id = useParams().id
-  const dispatch = useDispatch()
-  
+
   //yhden artistin haku
   /*useEffect(() => {
     dispatch(initSingleArtist(id))
@@ -26,34 +25,36 @@ const Artist = () => {
 
   if (thisArtist) {
     return (
-      <div> 
+      <div>
         <h1>
           {thisArtist.name}
         </h1>
-        <Table striped>
-          <tbody>
-            <tr>
-              <td><h4>Albums</h4></td>
-              <td><h4>Released</h4></td>
-              <td><h4>Avg rating</h4></td>
-            </tr>
-            {thisArtistAlbums.map(album =>
-              <tr key={album.id}>
-                <td>
-                  <Link to={`/albums/${album.id}`}>
-                  {album.title}
-                  </Link>          
-                </td>
-                <td>
-                  {album.released}
-                </td>
-                <td>
-                {Math.round((album.reviews.map(review => review.rating).reduce((a, b) => a + b, 0) / album.reviews.map(review => review.rating).length + Number.EPSILON) * 100) / 100}
-                </td>
-              </tr>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell><h3>Albums</h3></TableCell>
+                <TableCell><h3>Released</h3></TableCell>
+                <TableCell><h3>Avg rating</h3></TableCell>
+              </TableRow>
+              {thisArtistAlbums.map(album =>
+                <TableRow key={album.id}>
+                  <TableCell>
+                    <Link to={`/albums/${album.id}`}>
+                      {album.title}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    {album.released}
+                  </TableCell>
+                  <TableCell>
+                    {Math.round((album.reviews.map(review => review.rating).reduce((a, b) => a + b, 0) / album.reviews.map(review => review.rating).length + Number.EPSILON) * 100) / 100}
+                  </TableCell>
+                </TableRow>
               )}
-          </tbody>
-        </Table>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     )
   } else {

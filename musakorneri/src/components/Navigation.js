@@ -12,6 +12,7 @@ import Home from './Home'
 import CreateUser from './CreateUser'
 import LoginForm from './LoginForm'
 import Search from './Search'
+import { Button, AppBar, IconButton, Toolbar } from '@material-ui/core'
 
 export const history = createBrowserHistory()
 
@@ -24,30 +25,44 @@ const Navigation = () => {
     window.localStorage.clear()
     window.location.reload()
   }
-  
+
   return (
     <div>
-      <div> {loggedUser ? 
-      <div>
-      <p>Logged in as <b>{loggedUser.username}</b> <button className="btn btn-outline-info" onClick={() => logOut()}>Log out</button></p> 
-      </div>
-      : null} </div>
-      
-      <Router basename='/' history={history}>
+      <div> {loggedUser ?
         <div>
-          <Link to='/'><button className="btn btn-outline-info">Home</button></Link>
-          <Link to='/albums'><button className="btn btn-outline-info">Albums</button></Link>
-          <Link to='/artists'><button className="btn btn-outline-info">Artists</button></Link>
-          <Link to='/rate'><button className="btn btn-outline-info">Add album</button></Link>
-          <Link to='/search'><button className="btn btn-outline-info">Search</button></Link>
-          
-          { loggedUser ? 
-          null : 
-          <div>
-          <Link to='/register'><button className="btn btn-outline-info">Create account</button></Link>
-          <Link to='/login'><button className="btn btn-outline-info">Log in</button></Link>
-          </div>}
+          <p>Logged in as <b>{loggedUser.username}</b> <Button variant="contained" onClick={() => logOut()}>Log out</Button></p>
         </div>
+        : null} </div>
+
+      <Router basename='/' history={history}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton edge="start" color="inherit" aria-label="menu">
+            </IconButton>
+            <Button color="inherit" component={Link} to='/'>
+              Home
+              </Button>
+            <Button color="inherit" component={Link} to='/albums'>
+              Albums
+            </Button>
+            <Button color="inherit" component={Link} to='/artists'>
+              Artists
+            </Button>
+            <Button color="inherit" component={Link} to='/rate'>
+              Add album
+            </Button>
+            <Button color="inherit" component={Link} to='/search'>
+              Search
+            </Button>
+          </Toolbar>
+        </AppBar>
+
+        {loggedUser ?
+          null :
+          <div>
+            <Link to='/register'><Button className="btn btn-outline-info">Create account</Button></Link>
+            <Link to='/login'><Button className="btn btn-outline-info">Log in</Button></Link>
+          </div>}
         <Switch>
           <Route path='/albums/:id'>
             <Album />

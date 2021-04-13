@@ -6,7 +6,7 @@ const User = require('../models/user')
 
 
 reviewsRouter.get('/', async (req, res) => {
-  const reviews = await Review.find({}).populate('user', { username: 1 }).populate('album', { title: 1 })
+  const reviews = await Review.find({}).populate('user', { username: 1 }).populate('album', { title: 1, artist: 1 })
   res.status(200).json(reviews.map(review => review.toJSON()))
 })
 

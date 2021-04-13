@@ -2,19 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useField } from '../hooks'
 import { useSelector, useDispatch } from 'react-redux'
-import { Form, Button, Table } from 'react-bootstrap'
 import Select from 'react-select'
 import { addReview, initReviews, updateReview, deleteReview } from '../reducers/reviewReducer'
 import { initSingleAlbum } from '../reducers/singleAlbumReducer'
+import { TableContainer, Table, TableBody, TableRow, TableCell, Button, Paper, TextField, MenuItem } from '@material-ui/core'
 
 
 const Album = () => {
 
   const id = useParams().id
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(initReviews())
-  }, [dispatch])
 
   //yhden levyn tietojen haku
   /*useEffect(() => {
@@ -30,10 +27,10 @@ const Album = () => {
   const thisAlbum = albums.find(n => n.id === id)
 
   const thisAlbumReviews = reviews.filter(n => n.album.id === id)
-  const [rating, setRating] = useState(Number)
+  const [rating, setRating] = useState("")
 
   const handleChange = event => {
-    setRating(event.value);
+    setRating(event.target.value);
   }
 
   //Arvostelun lähetys
@@ -60,6 +57,12 @@ const Album = () => {
     }
   }
 
+  /*
+    <div>
+    <Select options={options} onChange={handleChange} />
+    </div>
+  
+    */
   //arvostelun poisto
   const removeReview = (id) => {
     const deleteWarning = window.confirm(`Remove your review?`)
@@ -91,55 +94,62 @@ const Album = () => {
   if (thisAlbum) {
     return (
       <div>
-        <h1>{thisAlbum.title} by {thisAlbum.artist}</h1>
+        <h1>{thisAlbum.title}
+        <div>by {thisAlbum.artist}</div></h1>
         <h2> Average Rating: {roundedAverage}</h2>
-        { user ? <Form onSubmit={sendReview}>
-          <Form.Group>
-            <Form.Label>
-              Your rating:
-          </Form.Label>
-            <Select options={options} onChange={handleChange} />
-            <Form.Label>
-              Your review (optional):
-          </Form.Label>
-            <Form.Control {...formReview} as='textarea' rows={3} maxLength='300' />
-            <Button type='submit'>Send</Button>
-          </Form.Group>
-        </Form> : <p>You must be logged in to add a review. <Link to ={'/login'}>Login</Link> or <Link to='/register'>Create a new account</Link></p>}
-        <Table striped>
-          <tbody>
-            <tr>
-              <td>
-                <h4>Rating</h4>
-              </td>
-              <td>
-                <h4>Review</h4>
-              </td>
-              <td>
-                <h4>User</h4>
-              </td>
-              <td></td>
-            </tr>
-            {thisAlbumReviews.map(review =>
-              <tr key={review.id}>
-                <td>
-                  {review.rating}
-                </td>
-                <td>
-                  {review.review}
-                </td>
-                <td>
-                  {review.user.username}
-                </td>
-                <td>
-                  {user ?
-                    user.username === review.user.username ?
-                      <Button variant='secondary' onClick={() => removeReview(review.id)}>X</Button> : null
-                    : null}
-                </td>
-              </tr>)}
-          </tbody>
-        </Table>
+        { user ? <form onSubmit={sendReview}>
+          <div>
+            <div>
+              <TextField select label="Rating" required onChange={handleChange} value={rating} variant="outlined" helperText="Select your rating">
+                {options.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </div>
+            <div>
+              <TextField {...formReview} rows={4} maxLength='300' label="Your review (optional)" multiline variant="outlined" />
+            </div>
+            <Button variant="contained" color="primary" type='submit'>Send</Button>
+          </div>
+        </form> : <p>You must be logged in to add a review. <Link to={'/login'}>Login</Link> or <Link to='/register'>Create a new account</Link></p>}
+        <TableContainer component={Paper}>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <h3>Rating</h3>
+                </TableCell>
+                <TableCell>
+                  <h3>Review</h3>
+                </TableCell>
+                <TableCell>
+                  <h3>User</h3>
+                </TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+              {thisAlbumReviews.map(review =>
+                <TableRow key={review.id}>
+                  <TableCell>
+                    {review.rating}
+                  </TableCell>
+                  <TableCell>
+                    {review.review}
+                  </TableCell>
+                  <TableCell>
+                    {review.user.username}
+                  </TableCell>
+                  <TableCell>
+                    {user ?
+                      user.username === review.user.username ?
+                        <Button variant='contained' onClick={() => removeReview(review.id)}>X</Button> : null
+                      : null}
+                  </TableCell>
+                </TableRow>)}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
     )
   } else {
