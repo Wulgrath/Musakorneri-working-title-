@@ -38,8 +38,6 @@ const Navigation = () => {
       <Router basename='/' history={history}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-            </IconButton>
             <Button color="inherit" component={Link} to='/'>
               Home
               </Button>
