@@ -24,7 +24,7 @@ const artistReducer = (state = [], action) => {
     case 'INIT_ALL_ARTISTS':
       return action.data
     case 'NEW_ARTIST':
-      const existingArtist = state.find(n => n.name_lowercase === action.data.artist.toLowerCase())
+      const existingArtist = state.find(n => n.name_lowerCase === action.data.artist.toLowerCase())
       if (existingArtist) {
         const artistToUpdate = existingArtist
         const updatedArtist = {
