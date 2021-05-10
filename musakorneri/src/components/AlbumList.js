@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { initAlbums } from '../reducers/albumReducer'
-import { addReview } from '../reducers/reviewReducer'
-import { TableContainer, Table, TableBody, TableRow, TableCell, Paper, TablePagination, Grid, Typography, Slider } from '@material-ui/core'
+import { TableContainer, Table, TableBody, TableRow, TableCell, Paper, TablePagination, Grid, TextField, MenuItem } from '@material-ui/core'
 import * as _ from 'lodash'
 
 const AlbumList = () => {
 
-  /*const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(initAlbums())
-  }, [dispatch])*/
-
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [sliderValue, setSliderValue] = useState([30, 40])
-  let [state, setState] = useState('default')
+  const [sliderValue, setSliderValue] = useState([0, 2021])
+  const [sortMethod, setSortMethod] = useState('title')
+  const [sortState, setSortState] = useState('asc')
+  const [releaseFilter, setReleaseFilter] = useState('All')
 
   const albums = useSelector(state => state.albums)
-
-  let sortedAlbums = [...albums]
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -31,79 +24,75 @@ const AlbumList = () => {
     setPage(0)
   }
 
-  const lodashSortedAlbums = _.sortBy(albums, 'title')
+  const lodashSortedAlbums = () => {
+    let sorted = _.sortBy(albums, sortMethod)
 
+    if (releaseFilter !== 'All') {
+      const filtered = _.filter(sorted, { 'released': releaseFilter })
+      sorted = filtered
+    }
 
-  /*<Typography id="range-slider" gutterBottom>
-  Year released: {valueText()}
-</Typography>
-<div>
-  <Slider
-    value={sliderValue}
-    onChange={handleSliderChange}
-    valueLabelDisplay="auto"
-    aria-labelledby="range-slider"
-    getAriaValueText={valueText}
-    style={{ width: 300 }}
-  />
-</div>
-  const valueText = (sliderValue) => {
-    return `${sliderValue}`
+    if (sortState === 'desc') {
+      return sorted.reverse()
+    } else {
+      return sorted
+    }
   }
 
-  const handleSliderChange = (event, newValue) => {
-    setSliderValue(newValue)
+  const sortBy = (field) => {
+    setSortMethod(field)
+    onSortChange()
   }
 
-
-
+  //korjattava vielä loppuun
   const onSortChange = () => {
-    const currentSort = state
+    const currentSort = sortState
     let nextSort
 
-    if (currentSort === 'down') nextSort = 'up'
-    else if(currentSort === 'up') nextSort = 'default'
-    else if(currentSort === 'default') nextSort = 'down'
+    if (currentSort === 'asc') nextSort = 'desc'
+    else if (currentSort === 'desc') nextSort = 'asc'
 
-    setState(nextSort)
+    setSortState(nextSort)
   }
-  console.log(state)
 
-  const sortTypes = {
-    up: {
-      class: 'sort-up',
-      fn: (a, b) => a.ratingAvg - b.ratingAvg
-    },
-    down: {
-      class: 'sort-down',
-      fn: (a, b) => b.ratingAvg - a.ratingAvg
-    }, 
-    default: {
-      class: 'sort',
-      fn: (a, b) => a
-    }
-  }*/
+  const handleYearFilter = (event) => {
+    setReleaseFilter(event.target.value)
+  }
+
+  const mappedYears = albums.map(album => album.released)
+  const uniqueYears = _.uniq(mappedYears)
+  const sortedUniqueYears = _.sortBy(uniqueYears)
+  const finalYears = [...sortedUniqueYears.concat('All')]
 
   return (
     <div>
       <Grid container>
-
+        <div className='inputField'>
+        <p>Filter by year released: </p>
+        <TextField select value={releaseFilter} onChange={handleYearFilter} variant="outlined" helperText="Select a specific year">
+          {finalYears.map((year => (
+            <MenuItem key={year} value={year}>
+              {year}
+            </MenuItem>
+          )))}
+        </TextField>
+        </div>
         <Grid item xs={12}>
           <TableContainer component={Paper}>
             <Table>
               <TableBody>
                 <TableRow>
                   <TableCell>
-                    <h3>Album title</h3>
+                    <h3 onClick={() => sortBy('title')}>Album title</h3>
                   </TableCell>
                   <TableCell>
-                    <h3>Avg rating</h3>
+                    <h3 onClick={() => sortBy('ratingAvg')}>Avg rating</h3>
                   </TableCell>
                   <TableCell>
-                    <h3>Artist</h3>
+                    <h3 onClick={() => sortBy('artist')}>Artist</h3>
                   </TableCell>
                 </TableRow>
-                {lodashSortedAlbums.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                {lodashSortedAlbums().slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map(album =>
                     <TableRow key={album.id}>
                       <TableCell>
@@ -132,13 +121,12 @@ const AlbumList = () => {
       <TablePagination
         rowsPerPageOptions={[10, 25]}
         component="div"
-        count={sortedAlbums.length}
+        count={lodashSortedAlbums().length}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-
     </div>
   )
 

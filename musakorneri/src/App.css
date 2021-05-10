@@ -56,3 +56,31 @@
 .tableCell {
   word-wrap: break-word;
 }
+
+.navigation {
+  margin-bottom: 1em;
+}
+
+.footer {
+  padding-top: 2em;
+}
+
+.inputField {
+  padding-bottom: 0.5em;
+}
+
+.button {
+  padding-top: 0.5em;
+}
+
+.input {
+  width: 40%;
+}
+
+.smallInput {
+  width: 12%
+}
+
+.view {
+  padding-top: 1em;
+}

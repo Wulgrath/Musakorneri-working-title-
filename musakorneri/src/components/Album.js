@@ -52,13 +52,6 @@ const Album = () => {
       dispatch(addReview(content))
     }
   }
-
-  /*
-    <div>
-    <Select options={options} onChange={handleChange} />
-    </div>
-  
-    */
   //arvostelun poisto
   const removeReview = (album, review) => {
     const deleteWarning = window.confirm(`Remove your review?`)
@@ -69,10 +62,6 @@ const Album = () => {
 
   const formReview = { ...review }
   delete formReview.reset
-
-  /*const ratingSum = thisAlbumReviews.map(n => n.rating).reduce((a, b) => a + b, 0)
-  const average = ratingSum / thisAlbumReviews.map(n => n.rating).length
-  const roundedAverage = Math.round((average + Number.EPSILON) * 100) / 100*/
 
   const options = [
     { value: 0.5, label: '0.5 - Trash' },
@@ -87,6 +76,8 @@ const Album = () => {
     { value: 5, label: '5 - A Classic' }
   ]
 
+  console.log(options)
+
   if (thisAlbum) {
     return (
       <div>
@@ -98,7 +89,7 @@ const Album = () => {
         <h2> Average Rating: {thisAlbum.ratingAvg}</h2>
         { user ? <form onSubmit={sendReview}>
           <div>
-            <div>
+            <div className='inputField'>
               <TextField select label="Rating" required onChange={handleChange} value={rating} variant="outlined" helperText="Select your rating">
                 {options.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -107,7 +98,7 @@ const Album = () => {
                 ))}
               </TextField>
             </div>
-            <div>
+            <div className='inputField'>
               <TextField {...formReview} rows={4} inputProps={{ maxLength: 200}} label="Your review (optional)" multiline variant="outlined" fullWidth/>
             </div>
             <Button variant="contained" color="primary" type='submit'>Send</Button>

@@ -49,6 +49,7 @@ const Search = () => {
         <label htmlFor='header-search'>
           <span className='visually-hidden'>Search</span>
         </label>
+        <div className='inputField'>
         <TextField
           type="text"
           id="header-search"
@@ -58,6 +59,7 @@ const Search = () => {
           maxLength="50"
           variant="outlined"
         />
+        </div>
       </form>
       <TableContainer component={Paper}>
         <Table>

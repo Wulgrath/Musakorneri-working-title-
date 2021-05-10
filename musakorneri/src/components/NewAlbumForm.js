@@ -70,26 +70,30 @@ const NewAlbumForm = () => {
       <h2>Add a new album</h2>
       <form onSubmit={addRating}>
         <div>
-          <div>
-            <TextField {...formTitle} required inputProps={{ maxLength: 50}} label="Album title" variant="outlined" />
+          <div className='inputField'>
+            <TextField {...formTitle} required inputProps={{ maxLength: 50 }} label="Album title" variant="outlined" className='input' />
+          </div>
+          <div className='inputField'>
+            <TextField {...formArtist} required inputProps={{ maxLength: 50 }} label="Artist" variant="outlined" className='input' />
+          </div>
+          <div className='inputField'>
+            <TextField {...formReleased} required inputProps={{ maxLength: 4 }} label="Year released" variant="outlined" max={new Date().getFullYear() + 1} className='smallInput' />
+          </div>
+          <div className='inputField'>
+            <TextField select label="Rating" required onChange={handleChange} value={rating} variant="outlined" className='smallInput'>
+              {options.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
           </div>
           <div>
-            <TextField {...formArtist} required inputProps={{ maxLength: 50}} label="Artist" variant="outlined" />
+            <TextField {...formReview} rows={4} inputProps={{ maxLength: 200 }} label="Your review (optional)" multiline variant="outlined" fullWidth />
           </div>
-          <div>
-            <TextField {...formReleased} required inputProps={{ maxLength: 4}} label="Year released" variant="outlined" max={new Date().getFullYear() + 1} />
+          <div className='button'>
+          <Button variant="contained" color="primary" type='submit' className='button'>Send</Button>
           </div>
-          <TextField select label="Rating" required onChange={handleChange} value={rating} variant="outlined" helperText="Select your rating">
-                {options.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-          <div>
-            <TextField {...formReview} rows={4} inputProps={{ maxLength: 200}} label="Your review (optional)" multiline variant="outlined" fullWidth/>
-          </div>
-          <Button variant="contained" color="primary" type='submit'>Send</Button>
         </div>
       </form>
     </div>

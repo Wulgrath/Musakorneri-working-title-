@@ -30,10 +30,10 @@ const CreateUser = () => {
     <div>
       <h1>Create a new account</h1>
       <form onSubmit={addUser}>
-        <div>
+        <div className='inputField'>
           <TextField label="username" {...formUsername} variant="outlined" />
         </div>
-        <div>
+        <div className='inputField'>
           <TextField label="password" {...formPassword} type="password" variant="outlined" />
         </div>
         <Button variant="contained" color="primary" id='loginButton' type='submit'>Create account</Button>

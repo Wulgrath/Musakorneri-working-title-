@@ -36,7 +36,7 @@ const Navigation = () => {
         : null} </div>
 
       <Router basename='/' history={history}>
-        <AppBar position="static">
+        <AppBar position="static" className='navigation'>
           <Toolbar>
             <Button color="inherit" component={Link} to='/'>
               Home
@@ -63,6 +63,7 @@ const Navigation = () => {
             <Link to='/login'><Button className="btn btn-outline-info">Log in</Button></Link>
           </div>}
           <Notification />
+          <div className='view'>
         <Switch>
           <Route path='/albums/:id'>
             <Album />
@@ -92,6 +93,7 @@ const Navigation = () => {
             <Home />
           </Route>
         </Switch>
+        </div>
       </Router>
     </div>
   )
