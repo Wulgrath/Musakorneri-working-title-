@@ -76,8 +76,6 @@ const Album = () => {
     { value: 5, label: '5 - A Classic' }
   ]
 
-  console.log(options)
-
   if (thisAlbum) {
     return (
       <div>
