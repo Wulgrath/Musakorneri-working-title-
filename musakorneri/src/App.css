@@ -74,11 +74,13 @@
 }
 
 .input {
-  width: 40%;
+  width: 30em;
+  max-width: 100%;
 }
 
 .smallInput {
-  width: 12%
+  width: 10em;
+  max-width: 100%;
 }
 
 .view {
