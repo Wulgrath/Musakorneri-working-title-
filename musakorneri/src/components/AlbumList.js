@@ -97,9 +97,6 @@ const AlbumList = () => {
                     <h3>Album title</h3>
                   </TableCell>
                   <TableCell>
-                    <h3>Released</h3>
-                  </TableCell>
-                  <TableCell>
                     <h3>Avg rating</h3>
                   </TableCell>
                   <TableCell>
@@ -113,9 +110,9 @@ const AlbumList = () => {
                         <Link to={`/albums/${album.id}`}>
                           {album.title}
                         </Link>
-                      </TableCell>
-                      <TableCell>
-                        {album.released}
+                        <div>
+                          ({album.released})
+                        </div>
                       </TableCell>
                       <TableCell>
                         {album.ratingAvg} ({album.reviews.length})
