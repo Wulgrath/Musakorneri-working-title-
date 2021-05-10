@@ -41,7 +41,6 @@ const App = () => {
       <div>
         <h1>Musakorneri</h1>
       </div>
-      <Notification />
       <Navigation />
       <BottomNavigation>
         <Footer />

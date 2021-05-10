@@ -1,6 +1,7 @@
 import React from 'react'
-import { Container, Grid, Paper, TableContainer, Table, TableBody, TableRow, TableCell } from '@material-ui/core'
+import { Grid, Paper, TableContainer, Table, TableBody, TableRow, TableCell } from '@material-ui/core'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { addReview } from '../reducers/reviewReducer'
 
 
@@ -18,15 +19,17 @@ const Home = () => {
     <div>
       <h1>Welcome!</h1>
       <Grid container spacing={3}>
-        <Grid item xs={6}>
-          Latest reviews
+        <Grid item xs={12} sm={6}>
+          <h4>Latest reviews</h4>
           <TableContainer component={Paper}>
             <Table>
               <TableBody>
                 {latestReviews.map(review =>
                   <TableRow key={review.id}>
                     <TableCell>
-                      {review.album.title} by {review.album.artist}
+                      <Link to={`/albums/${review.album.id}`}>
+                        {review.album.title}
+                      </Link> by <Link to={`/artists/${review.album.artistID}`}>{review.album.artist}</Link>
                     </TableCell>
                     <TableCell>
                       {review.user.username}
@@ -40,23 +43,27 @@ const Home = () => {
             </Table>
           </TableContainer>
         </Grid>
-        <Grid item xs={6}>
-          Latest added albums
+        <Grid item xs={12} sm={6}>
+          <h4>Latest added albums</h4>
           <TableContainer component={Paper}>
             <Table>
               <TableBody>
-                {latestAlbums.map(album => 
+                {latestAlbums.map(album =>
                   <TableRow key={album.id}>
                     <TableCell>
-                      {album.title} by {album.artist}
+                      <Link to={`/albums/${album.id}`}>
+                      {album.title} 
+                      </Link> by <Link to={`/artists/${album.artistID.id ? album.artistID.id : album.artistID}`}>{album.artist}
+                      </Link>
                     </TableCell>
                   </TableRow>
-                  )}
+                )}
               </TableBody>
             </Table>
           </TableContainer>
         </Grid>
         <Grid item xs={12}>
+          <h4>News</h4>
           <Paper>Here are the latest news</Paper>
         </Grid>
       </Grid>

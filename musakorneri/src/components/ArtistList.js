@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { initAlbums, initArtists } from '../reducers/artistReducer'
-import { TableContainer, Table, TableBody, TableRow, TableCell, Paper } from '@material-ui/core'
+import { TableContainer, Table, TableBody, TableRow, TableCell, Paper, TablePagination } from '@material-ui/core'
 const ArtistList = () => {
 
   /*const dispatch = useDispatch()
@@ -10,7 +10,23 @@ const ArtistList = () => {
     dispatch(initArtists())
   }, [dispatch])*/
 
+  
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+
   const artists = useSelector(state => state.artists)
+
+  const alphabeticalArtists = artists.sort((a, b) => a.name_lowerCase.localeCompare(b.name_lowerCase))
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
+  
 
   return (
     <div>
@@ -25,7 +41,8 @@ const ArtistList = () => {
                 <h3>Albums</h3>
               </TableCell>
             </TableRow>
-            {artists.map(artist =>
+            {alphabeticalArtists.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map(artist =>
               <TableRow key={artist.id}>
                 <TableCell>
                   <Link to={`/artists/${artist.id}`}>
@@ -40,6 +57,15 @@ const ArtistList = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination 
+        rowsPerPageOptions={[10, 25]}
+        component="div"
+        count={alphabeticalArtists.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
     </div>
   )
 }

@@ -10,18 +10,9 @@ const Artist = () => {
 
   const id = useParams().id
 
-  //yhden artistin haku
-  /*useEffect(() => {
-    dispatch(initSingleArtist(id))
-  }, [])*/
-
 
   const artists = useSelector(state => state.artists)
-  const albums = useSelector(state => state.albums)
-  //const thisArtist = useSelector(state => state.singleArtist)
   const thisArtist = artists.find(n => n.id === id)
-
-  const thisArtistAlbums = albums.filter(n => n.artistID.id === id)
 
   if (thisArtist) {
     return (
@@ -37,7 +28,7 @@ const Artist = () => {
                 <TableCell><h3>Released</h3></TableCell>
                 <TableCell><h3>Avg rating</h3></TableCell>
               </TableRow>
-              {thisArtistAlbums.map(album =>
+              {thisArtist.albums.map(album =>
                 <TableRow key={album.id}>
                   <TableCell>
                     <Link to={`/albums/${album.id}`}>
@@ -48,7 +39,7 @@ const Artist = () => {
                     {album.released}
                   </TableCell>
                   <TableCell>
-                    {Math.round((album.reviews.map(review => review.rating).reduce((a, b) => a + b, 0) / album.reviews.map(review => review.rating).length + Number.EPSILON) * 100) / 100}
+                    {album.ratingAvg}
                   </TableCell>
                 </TableRow>
               )}

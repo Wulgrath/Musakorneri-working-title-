@@ -19,7 +19,6 @@ const CreateUser = () => {
       password: password.value
     }
     dispatch(createUser(content))
-    history.push('/login')
   }
 
   const formUsername = { ...username }

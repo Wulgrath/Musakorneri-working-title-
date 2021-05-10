@@ -2,8 +2,12 @@ const artistRouter = require('express').Router()
 const Artist = require('../models/artist')
 
 artistRouter.get('/', async (req, res) => {
-  const artists = await Artist.find({}).populate('albums', {title: 1, released: 1})
-  res.json(artists.map(artist => artist.toJSON()))
+  try {
+    const artists = await Artist.find({}).populate('albums', {title: 1, released: 1, ratingAvg: 1})
+    res.status(200).json(artists)
+  } catch (exception) {
+    res.status(400).json(exception)
+  }
 })
 
 artistRouter.get('/:id', async (req, res) => {

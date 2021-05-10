@@ -3,10 +3,18 @@ const jwt = require('jsonwebtoken')
 const Album = require('../models/album')
 const Review = require('../models/review')
 const User = require('../models/user')
+const Artist = require('../models/artist')
 
+
+const calculateAverage = (reviews) => {
+  const albumRatingsSum = reviews.map(review => review.rating).reduce((a, b) => a + b, 0)
+  const averageRating = albumRatingsSum / reviews.map(review => review.rating).length
+  const roundedAverage = Math.round((averageRating + Number.EPSILON) * 100) / 100
+  return roundedAverage
+}
 
 reviewsRouter.get('/', async (req, res) => {
-  const reviews = await Review.find({}).populate('user', { username: 1 }).populate('album', { title: 1, artist: 1 })
+  const reviews = await Review.find({}).populate('user', { username: 1 }).populate('album', { title: 1, artist: 1, artistID: 1})
   res.status(200).json(reviews.map(review => review.toJSON()))
 })
 
@@ -16,6 +24,7 @@ reviewsRouter.get('/:id', async (req, res) => {
 })
 
 reviewsRouter.post('/', async (req, res) => {
+
   const body = req.body
 
   const decodedToken = jwt.verify(req.token, process.env.SECRET)
@@ -25,6 +34,9 @@ reviewsRouter.post('/', async (req, res) => {
 
   const user = await User.findById(decodedToken.id)
   const album = await Album.findById(body.albumID)
+  //const artist = await Artist.findById(album.artistID)
+  console.log(user)
+
 
   //tarkistetaan mikäli arvostelu on jo olemassa käyttäjältä kyseiseen levyyn
   const existingUserReview = await Review.findOne({ user: user.id, album: album.id })
@@ -36,6 +48,7 @@ reviewsRouter.post('/', async (req, res) => {
   const review = new Review({
     album: album.id,
     user: user.id,
+    user_name: user.username,
     rating: body.rating,
     review: body.review
   })
@@ -45,7 +58,11 @@ reviewsRouter.post('/', async (req, res) => {
     const savedReview = await review.save()
 
     album.reviews = album.reviews.concat(savedReview._id)
-    //tänne getRating
+
+    //haetaan kaikki albumin arvostelut ja lasketaan keskiarvo.
+    const allAlbumReviews = await Review.find({album: album.id})
+    const roundedAverage = calculateAverage(allAlbumReviews)
+    album.ratingAvg = roundedAverage
 
     await album.save()
 
@@ -81,6 +98,16 @@ reviewsRouter.put('/:id', async (req, res) => {
 
   try {
     const updatedReview = await Review.findByIdAndUpdate(req.params.id, review, { new: true })
+
+    const album = await Album.findById(updatedReview.album)
+
+    const allAlbumReviews = await Review.find({album: album.id})
+    const roundedAverage = calculateAverage(allAlbumReviews)
+
+    album.ratingAvg = roundedAverage
+    await album.save()
+
+
     res.status(201).json(updatedReview)
   } catch (exception) {
     res.status(400).json(exception)
@@ -109,6 +136,14 @@ reviewsRouter.delete('/:id', async (req, res) => {
 
   try {
     await Review.findByIdAndRemove(req.params.id)
+
+    const album = await Album.findById(review.album)
+
+    const allAlbumReviews = await Review.find({album: album.id})
+    const roundedAverage = calculateAverage(allAlbumReviews) || 0
+    album.ratingAvg = roundedAverage
+    await album.save()
+
     res.status(204).end()
   } catch (exception) {
     res.status(400).json(exception)
@@ -117,26 +152,3 @@ reviewsRouter.delete('/:id', async (req, res) => {
 
 module.exports = reviewsRouter
 
-
-    /*const getRating = (id) => {
-
-      Album.findById(id, 'reviews', function (err, album) {
-        Review.aggregate([
-          { $match: { _id: { $in: album.reviews } } },
-          { $group: { _id: album._id, average: { $avg: '$rating' } } },
-          { $project: { _id: 0, average: 1 } }
-        ], function (err, result) {
-          if (err) {
-            console.log(err)
-          }
-          console.log(result)
-          return result[0].average
-        })
-      })
-    }
-
-    console.log(getRating(album.id))
-
-    //getRating(album.id)
-
-    //album.ratingAvg = avgRating*/

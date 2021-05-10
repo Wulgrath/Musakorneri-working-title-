@@ -28,7 +28,9 @@ const NewAlbumForm = () => {
       artist: artist.value,
       released: released.value,
       rating: rating,
-      review: review.value
+      review: review.value,
+      user_name: loggedUser.username,
+      userID: loggedUser.id
     }
     dispatch(addAlbum(content))
   }
@@ -45,8 +47,8 @@ const NewAlbumForm = () => {
   const options = [
     { value: 0.5, label: '0.5 - Trash' },
     { value: 1, label: '1.0 - Awful' },
-    { value: 1.5, label: '1.5 - Poor' },
-    { value: 2, label: '2.0 - Very Poor' },
+    { value: 1.5, label: '1.5 - Very Poor' },
+    { value: 2, label: '2.0 - Poor' },
     { value: 2.5, label: '2.5 - Mediocre' },
     { value: 3, label: '3 - Good' },
     { value: 3.5, label: '3.5 - Great' },
@@ -69,13 +71,13 @@ const NewAlbumForm = () => {
       <form onSubmit={addRating}>
         <div>
           <div>
-            <TextField {...formTitle} required maxLength='50' label="Album title" variant="outlined" />
+            <TextField {...formTitle} required inputProps={{ maxLength: 50}} label="Album title" variant="outlined" />
           </div>
           <div>
-            <TextField {...formArtist} required maxLength='50' label="Artist" variant="outlined" />
+            <TextField {...formArtist} required inputProps={{ maxLength: 50}} label="Artist" variant="outlined" />
           </div>
           <div>
-            <TextField {...formReleased} required maxLength='4' label="Year released" variant="outlined" max={new Date().getFullYear() + 1} />
+            <TextField {...formReleased} required inputProps={{ maxLength: 4}} label="Year released" variant="outlined" max={new Date().getFullYear() + 1} />
           </div>
           <TextField select label="Rating" required onChange={handleChange} value={rating} variant="outlined" helperText="Select your rating">
                 {options.map((option) => (
@@ -85,7 +87,7 @@ const NewAlbumForm = () => {
                 ))}
               </TextField>
           <div>
-            <TextField {...formReview} rows={4} maxLength='300' label="Your review (optional)" multiline variant="outlined" />
+            <TextField {...formReview} rows={4} inputProps={{ maxLength: 200}} label="Your review (optional)" multiline variant="outlined" fullWidth/>
           </div>
           <Button variant="contained" color="primary" type='submit'>Send</Button>
         </div>

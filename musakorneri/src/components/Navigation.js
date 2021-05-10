@@ -13,6 +13,7 @@ import CreateUser from './CreateUser'
 import LoginForm from './LoginForm'
 import Search from './Search'
 import { Button, AppBar, IconButton, Toolbar } from '@material-ui/core'
+import Notification from './Notification'
 
 export const history = createBrowserHistory()
 
@@ -63,6 +64,7 @@ const Navigation = () => {
             <Link to='/register'><Button className="btn btn-outline-info">Create account</Button></Link>
             <Link to='/login'><Button className="btn btn-outline-info">Log in</Button></Link>
           </div>}
+          <Notification />
         <Switch>
           <Route path='/albums/:id'>
             <Album />

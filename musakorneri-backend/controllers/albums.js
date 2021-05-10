@@ -6,7 +6,7 @@ const Review = require('../models/review')
 const User = require('../models/user')
 
 albumsRouter.get('/', async (req, res) => {
-  const albums = await Album.find({}).populate('artistID', {name: 1}).populate('reviews', {rating: 1, review: 1, user: 1})
+  const albums = await Album.find({}).populate('artistID', {name: 1}).populate('reviews', {rating: 1, review: 1, user: 1, user_name: 1})
   res.json(albums.map(album => album.toJSON()))
 })
 
@@ -52,6 +52,7 @@ albumsRouter.post('/', async (req, res) => {
     title: body.title,
     artist: body.artist,
     released: body.released,
+    ratingAvg: body.rating,
     artistID: artist.id
   })
 
@@ -64,6 +65,7 @@ albumsRouter.post('/', async (req, res) => {
     const review = new Review({
       album: savedAlbum._id,
       user: user.id,
+      user_name: user.username,
       rating: body.rating,
       review: body.review,
     })
@@ -76,7 +78,7 @@ albumsRouter.post('/', async (req, res) => {
     user.reviews = user.reviews.concat(savedReview._id)
     await user.save()
 
-    res.status(201).json(savedAlbum)
+    res.status(201).json({savedAlbum, savedReview})
   }
   catch (exception) {
     res.status(400).json(exception)

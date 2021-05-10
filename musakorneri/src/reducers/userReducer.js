@@ -1,6 +1,7 @@
 import userService from '../services/userService'
 import { setNotification } from './notificationReducer'
 import { setErrorNotification } from './errorNotificationReducer'
+import { history } from '../components/Navigation'
 
 export const initUsers = () => {
   return async dispatch => {
@@ -21,6 +22,7 @@ export const createUser = (content) => {
         data: newUser
       })
       dispatch(setNotification('User created, you can now log in', 5))
+      history.push('/login')
     } catch (exception) {
       dispatch(setErrorNotification('Username already taken', 5))
     }
