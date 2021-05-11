@@ -60,6 +60,7 @@
 
 .navigation {
   margin-bottom: 1em;
+  border-radius: 5px
 }
 
 .footer {
@@ -88,6 +89,31 @@
   padding-top: 1em;
 }
 
-.logOut {
-  color: red
+.container {
+  color:#282c34
+}
+
+.customPaper {
+  border-left: solid;
+  border-top: solid;
+  border-width: thin;
+  border-color: #dad9d9;
+  background-color:white;
+  border-radius: 4px;
+  box-shadow: 1px 1px #aaa9a9;
+}
+
+.footer {
+  text-align: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding-top: 1em;
+}
+
+.deleteButton {
+  padding: 5px;
+  margin-right: 1em;
 }

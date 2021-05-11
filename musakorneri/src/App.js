@@ -9,7 +9,8 @@ import reviewService from './services/reviews'
 import { initAlbums } from './reducers/albumReducer'
 import { initArtists } from './reducers/artistReducer'
 import { initReviews } from './reducers/reviewReducer'
-import { Container, BottomNavigation, createMuiTheme, ThemeProvider } from '@material-ui/core'
+import { Container, createMuiTheme, ThemeProvider } from '@material-ui/core'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 const theme = createMuiTheme({
   palette: {
@@ -20,6 +21,9 @@ const theme = createMuiTheme({
     secondary: {
       main: '#383635', //grey
     },
+    background: {
+      default: '#f0f3f5'
+    }
   }
 })
 
@@ -48,15 +52,14 @@ const App = () => {
   })
 
   return (
-    <Container>
+    <Container className='container'>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
       <div>
         <h1>Musakorneri</h1>
       </div>
       <Navigation />
-      <BottomNavigation>
-        <Footer />
-      </BottomNavigation>
+        <Footer className='footer'/>
       </ThemeProvider>
     </Container>
   )

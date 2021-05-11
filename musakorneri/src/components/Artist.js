@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { initAlbums } from '../reducers/albumReducer'
 import { initSingleArtist } from '../reducers/singleArtistReducer'
-import { TableContainer, Table, TableBody, TableRow, TableCell, Button, Paper } from '@material-ui/core'
+import { TableContainer, Table, TableBody, TableRow, TableCell } from '@material-ui/core'
 
 
 const Artist = () => {
@@ -20,7 +20,7 @@ const Artist = () => {
         <h1>
           {thisArtist.name}
         </h1>
-        <TableContainer component={Paper}>
+        <TableContainer className='customPaper'>
           <Table>
             <TableBody>
               <TableRow>

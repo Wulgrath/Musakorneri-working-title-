@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useField } from '../hooks'
 import { useSelector, useDispatch } from 'react-redux'
-import Select from 'react-select'
 import { addReview, initReviews, updateReview, deleteReview } from '../reducers/reviewReducer'
-import { initSingleAlbum } from '../reducers/singleAlbumReducer'
-import { TableContainer, Table, TableBody, TableRow, TableCell, Button, Paper, TextField, MenuItem, Grid } from '@material-ui/core'
-import { sizing } from '@material-ui/system'
+import { TableContainer, Table, TableBody, TableRow, TableCell, Button, TextField, MenuItem, Grid } from '@material-ui/core'
 
 const Album = () => {
 
@@ -105,7 +102,7 @@ const Album = () => {
         <h2>Reviews</h2>
         <Grid container>
           <Grid item xs={12}>
-            <TableContainer component={Paper}>
+            <TableContainer className='customPaper'>
               <Table className="table">
                 <TableBody>
                   <TableRow>
@@ -118,24 +115,21 @@ const Album = () => {
                     <TableCell>
                       <h3>User</h3>
                     </TableCell>
-                    <TableCell></TableCell>
                   </TableRow>
                   {thisAlbum.reviews.map(review =>
                     <TableRow key={review.id || review}>
                       <TableCell>
-                        {review.rating}
+                      {user ?
+                          user.id === review.user ?
+                            <button className='deleteButton' onClick={() => removeReview(thisAlbum.id, review)}>X</button> : null
+                          : null}
+                        {review.rating} 
                       </TableCell>
                       <TableCell className="tableCell" style={{overflow: "hidden", textOverflow: "ellipsis"}}>
                         {review.review}
                       </TableCell>
                       <TableCell>
                         {review.user_name}
-                      </TableCell>
-                      <TableCell>
-                        {user ?
-                          user.id === review.user ?
-                            <Button variant='contained' onClick={() => removeReview(thisAlbum.id, review)}>X</Button> : null
-                          : null}
                       </TableCell>
                     </TableRow>)}
                 </TableBody>

@@ -15,11 +15,11 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Welcome!</h1>
+      <h2>Welcome!</h2>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <h4>Latest reviews</h4>
-          <TableContainer component={Paper}>
+          <TableContainer className='customPaper'>
             <Table>
               <TableBody>
                 {latestReviews.map(review =>
@@ -43,7 +43,7 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <h4>Latest added albums</h4>
-          <TableContainer component={Paper}>
+          <TableContainer className='customPaper'>
             <Table>
               <TableBody>
                 {latestAlbums.map(album =>
@@ -62,7 +62,7 @@ const Home = () => {
         </Grid>
         <Grid item xs={12}>
           <h4>News</h4>
-          <Paper>Here are the latest news</Paper>
+          <div className='customPaper'>Here are the latest news</div>
         </Grid>
       </Grid>
     </div>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { initAlbums, initArtists } from '../reducers/artistReducer'
-import { TableContainer, Table, TableBody, TableRow, TableCell, Paper, TablePagination } from '@material-ui/core'
+import { TableContainer, Table, TableBody, TableRow, TableCell } from '@material-ui/core'
+import Pagination from '@material-ui/lab/Pagination'
 const ArtistList = () => {
 
   /*const dispatch = useDispatch()
@@ -11,7 +11,7 @@ const ArtistList = () => {
   }, [dispatch])*/
 
   
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   const artists = useSelector(state => state.artists)
@@ -21,16 +21,13 @@ const ArtistList = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
   }
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
-  }
   
+  const indexOfLast = page * rowsPerPage
+  const indexOfFirst = indexOfLast - rowsPerPage
 
   return (
     <div>
-      <TableContainer component={Paper}>
+      <TableContainer className='customPaper'>
         <Table>
           <TableBody>
             <TableRow>
@@ -41,7 +38,7 @@ const ArtistList = () => {
                 <h3>Albums</h3>
               </TableCell>
             </TableRow>
-            {alphabeticalArtists.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            {alphabeticalArtists.slice(indexOfFirst, indexOfLast)
             .map(artist =>
               <TableRow key={artist.id}>
                 <TableCell>
@@ -57,15 +54,17 @@ const ArtistList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination 
-        rowsPerPageOptions={[10, 25]}
-        component="div"
-        count={alphabeticalArtists.length}
-        rowsPerPage={rowsPerPage}
+      <div className='pagination'>
+      <Pagination 
+        count={Math.ceil(alphabeticalArtists.length / rowsPerPage)}
         page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
+        siblingCount={1}
+        boundaryCount={1}
+        onChange={handleChangePage}
+        variant='outlined'
+        shape='rounded'
       />
+      </div>
     </div>
   )
 }
