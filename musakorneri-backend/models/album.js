@@ -13,6 +13,9 @@ const albumSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  artist_lowerCase: {
+    type:String
+  },
   released: {
     type: Number
   },
@@ -43,6 +46,7 @@ albumSchema.set('toJSON', {
 
 albumSchema.pre('save', function (next) {
   this.title_lowerCase = this.title.toLowerCase()
+  this.artist_lowerCase = this.artist.toLowerCase()
   next()
 })
 

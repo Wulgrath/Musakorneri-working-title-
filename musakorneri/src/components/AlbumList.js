@@ -85,13 +85,13 @@ const AlbumList = () => {
               <TableBody>
                 <TableRow>
                   <TableCell>
-                    <h3 onClick={() => sortBy('title')}>Album title</h3>
+                    <h3 onClick={() => sortBy('title_lowerCase')}>Album title</h3>
                   </TableCell>
                   <TableCell>
                     <h3 onClick={() => sortBy('ratingAvg')}>Avg rating</h3>
                   </TableCell>
                   <TableCell>
-                    <h3 onClick={() => sortBy('artist')}>Artist</h3>
+                    <h3 onClick={() => sortBy('artist_lowerCase')}>Artist</h3>
                   </TableCell>
                 </TableRow>
                 {lodashSortedAlbums().slice(indexOfFirst, indexOfLast)
