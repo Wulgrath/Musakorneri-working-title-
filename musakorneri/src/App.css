@@ -2,6 +2,7 @@
   text-align: center;
 }
 
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -85,4 +86,8 @@
 
 .view {
   padding-top: 1em;
+}
+
+.logOut {
+  color: red
 }

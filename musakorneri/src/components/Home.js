@@ -1,9 +1,7 @@
 import React from 'react'
-import { Grid, Paper, TableContainer, Table, TableBody, TableRow, TableCell } from '@material-ui/core'
+import { Grid, Paper, TableContainer, Table, TableBody, TableRow, TableCell, createMuiTheme, ThemeProvider } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { addReview } from '../reducers/reviewReducer'
-
 
 const Home = () => {
 
