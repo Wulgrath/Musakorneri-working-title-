@@ -4,15 +4,18 @@ import { setErrorNotification } from './errorNotificationReducer'
 import { updateNewReview } from './albumReducer'
 import { updateExistingReview } from './albumReducer'
 import { removeReviewFromAlbum } from './albumReducer'
+import { setLoading } from './loadingReducer'
 
 export const addReview = review => {
   return async dispatch => {
     try {
+      dispatch(setLoading(true))
       const newReview = await reviewService.create(review)
       dispatch({
         type: 'NEW_REVIEW',
         data:  { newReview, additionalData: review}
       })
+      dispatch(setLoading(false))
       dispatch(updateNewReview(newReview))
       dispatch(setNotification('Review successfully added', 5))
     } catch (exception) {
@@ -47,11 +50,13 @@ export const updateReview = (id, content) => {
   }
   return async dispatch => {
     try {
+      dispatch(setLoading(true))
       await reviewService.update(id, newReview)
       dispatch({
         type: 'UPDATE',
         data: { id, newReview }
       })
+      dispatch(setLoading(false))
       dispatch(setNotification('Review updated', 5))
       dispatch(updateExistingReview(id, newReview))
     } catch (exception) {

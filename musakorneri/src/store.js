@@ -11,6 +11,7 @@ import singleArtistReducer from './reducers/singleArtistReducer'
 import notificationReducer from './reducers/notificationReducer'
 import errorNotificationReducer from './reducers/errorNotificationReducer'
 import searchReducer from './reducers/searchReducer'
+import loadingReducer from './reducers/loadingReducer'
 
 
 const reducer = combineReducers({
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   reviews: reviewReducer,
   loggedUser: loginReducer,
   users: userReducer,
+  loading: loadingReducer,
   singleAlbum: singleAlbumReducer,
   singleArtist: singleArtistReducer,
   notification: notificationReducer,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useField } from '../hooks'
 import { useSelector, useDispatch } from 'react-redux'
-import { addReview, initReviews, updateReview, deleteReview } from '../reducers/reviewReducer'
+import { addReview, updateReview, deleteReview } from '../reducers/reviewReducer'
 import { TableContainer, Table, TableBody, TableRow, TableCell, Button, TextField, MenuItem, Grid } from '@material-ui/core'
 
 const Album = () => {
@@ -85,7 +85,7 @@ const Album = () => {
         { user ? <form onSubmit={sendReview}>
           <div>
             <div className='inputField'>
-              <TextField select label="Rating" required onChange={handleChange} value={rating} variant="outlined" helperText="Select your rating">
+              <TextField select label="Rating" required onChange={handleChange} value={rating} variant="outlined" helperText="Select your rating" className='smallInput'>
                 {options.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}

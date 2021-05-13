@@ -1,12 +1,22 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Alert } from '@material-ui/lab'
+import { CircularProgress } from '@material-ui/core'
 
 const Notification = () => {
   const notification = useSelector(state => state.notification)
   const errorNotification = useSelector(state => state.errorNotification)
+  const loading = useSelector(state => state.loading)
 
-  if (notification) {
+  if (loading) {
+    return (
+      <div className='loading'>
+          <CircularProgress />
+      </div>
+    )
+  }
+
+  else if (notification) {
     return (
       <div>
         <Alert className='notificationSuccess'>
@@ -14,7 +24,7 @@ const Notification = () => {
         </Alert>
       </div>
     )
-  } else if (errorNotification){
+  } else if (errorNotification) {
     return (
       <div>
         <Alert severity='error'>

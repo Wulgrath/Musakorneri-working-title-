@@ -3,21 +3,25 @@ import { setNotification } from './notificationReducer'
 import { setErrorNotification } from './errorNotificationReducer'
 import { newArtist } from './artistReducer' 
 import { addReviewFromNewAlbum } from './reviewReducer'
+import { setLoading } from './loadingReducer'
 
 
 export const initAlbums = () => {
   return async dispatch => {
+    dispatch(setLoading(true))
     const albums = await albumService.getAll()
     dispatch({
       type: 'INIT_ALL_ALBUMS',
       data: albums
     })
+    dispatch(setLoading(false))
   }
 }
 
 export const addAlbum = content => {
   return async dispatch => {
     try {
+      dispatch(setLoading(true))
       const resData = await albumService.create(content)
       const newAlbum = resData.savedAlbum
       const newReview = resData.savedReview
@@ -33,6 +37,7 @@ export const addAlbum = content => {
         type: 'NEW_ALBUM',
         data: {newAlbum, newReview}
       })
+      dispatch(setLoading(false))
       dispatch(setNotification(`Successfully added new album '${newAlbum.title}'`, 5))
       dispatch(newArtist(newAlbum))
       dispatch(addReviewFromNewAlbum(newReview, additionalData))
