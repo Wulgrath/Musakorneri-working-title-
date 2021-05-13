@@ -14,7 +14,7 @@ const calculateAverage = (reviews) => {
 }
 
 reviewsRouter.get('/', async (req, res) => {
-  const reviews = await Review.find({}).populate('user', { username: 1 }).populate('album', { title: 1, artist: 1, artistID: 1})
+  const reviews = await Review.find({}).populate('user', { username: 1 }).populate('album', { title: 1, artist: 1, artistID: 1, title_capitalized: 1})
   res.status(200).json(reviews.map(review => review.toJSON()))
 })
 

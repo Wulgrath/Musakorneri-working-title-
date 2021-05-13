@@ -77,7 +77,7 @@ const NewAlbumForm = () => {
             <TextField {...formArtist} required inputProps={{ maxLength: 50 }} label="Artist" variant="outlined" className='input' />
           </div>
           <div className='inputField'>
-            <TextField {...formReleased} required inputProps={{ maxLength: 4 }} label="Year released" variant="outlined" max={new Date().getFullYear() + 1} className='smallInput' />
+            <TextField {...formReleased} type='number' required inputProps={{ min: 0, max: new Date().getFullYear() + 1, maxLength: 4 }} label="Year released" variant="outlined" /*max={new Date().getFullYear() + 1}*/ className='smallInput' />
           </div>
           <div className='inputField'>
             <TextField select label="Rating" required onChange={handleChange} value={rating} variant="outlined" className='smallInput'>

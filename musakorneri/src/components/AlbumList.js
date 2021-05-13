@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { TableContainer, Table, TableBody, TableRow, TableCell, TablePagination, Grid, TextField, MenuItem } from '@material-ui/core'
+import { TableContainer, Table, TableBody, TableRow, TableCell, Grid, TextField, MenuItem } from '@material-ui/core'
 import Pagination from '@material-ui/lab/Pagination'
 import * as _ from 'lodash'
 
@@ -99,7 +99,7 @@ const AlbumList = () => {
                     <TableRow key={album.id}>
                       <TableCell>
                         <Link to={`/albums/${album.id}`}>
-                          {album.title}
+                          {album.title_capitalized || album.title}
                         </Link>
                         <div>
                           ({album.released})

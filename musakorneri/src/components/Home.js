@@ -26,7 +26,7 @@ const Home = () => {
                   <TableRow key={review.id}>
                     <TableCell>
                       <Link to={`/albums/${review.album.id}`}>
-                        {review.album.title}
+                        {review.album.title_capitalized || review.album.title}
                       </Link> by <Link to={`/artists/${review.album.artistID}`}>{review.album.artist}</Link>
                     </TableCell>
                     <TableCell>
@@ -50,7 +50,7 @@ const Home = () => {
                   <TableRow key={album.id}>
                     <TableCell>
                       <Link to={`/albums/${album.id}`}>
-                      {album.title} 
+                        {album.title_capitalized || album.title}
                       </Link> by <Link to={`/artists/${album.artistID.id ? album.artistID.id : album.artistID}`}>{album.artist}
                       </Link>
                     </TableCell>

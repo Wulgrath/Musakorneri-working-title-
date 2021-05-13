@@ -76,7 +76,7 @@ const Album = () => {
   if (thisAlbum) {
     return (
       <div>
-        <h1>{thisAlbum.title}
+        <h1>{thisAlbum.title_capitalized || thisAlbum.title}
           <div>by <Link to={`/artists/${thisAlbum.artistID.id || thisAlbum.artistID}`}>
             {thisAlbum.artist}
           </Link>

@@ -32,7 +32,7 @@ const Artist = () => {
                 <TableRow key={album.id}>
                   <TableCell>
                     <Link to={`/albums/${album.id}`}>
-                      {album.title}
+                      {album.title_capitalized || album.title}
                     </Link>
                   </TableCell>
                   <TableCell>

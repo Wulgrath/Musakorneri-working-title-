@@ -9,6 +9,9 @@ const albumSchema = mongoose.Schema({
   title_lowerCase: {
     type: String, 
   },
+  title_capitalized: {
+    type: String
+  },
   artist: {
     type: String,
     required: true
@@ -36,6 +39,9 @@ const albumSchema = mongoose.Schema({
   comments: []
 })
 
+const capitalize = (str, lower = false) => 
+    (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase())
+
 albumSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
@@ -47,7 +53,9 @@ albumSchema.set('toJSON', {
 albumSchema.pre('save', function (next) {
   this.title_lowerCase = this.title.toLowerCase()
   this.artist_lowerCase = this.artist.toLowerCase()
+  this.title_capitalized = capitalize(this.title)
   next()
+
 })
 
 module.exports = mongoose.model('Album', albumSchema)
