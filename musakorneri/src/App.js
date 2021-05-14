@@ -11,11 +11,12 @@ import { initArtists } from './reducers/artistReducer'
 import { initReviews } from './reducers/reviewReducer'
 import { Container, createMuiTheme, ThemeProvider } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import logo from './logo.png'
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#6ebdd4' //light, metallic blue
+      main: '#00CCFF' //light, metallic blue
       //previous green: '#11cb5f'
     },
     secondary: {
@@ -55,8 +56,8 @@ const App = () => {
     <Container className='container'>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-      <div>
-        <h1>Musakorneri</h1>
+      <div className='logo'>
+        <img src={logo} alt='logo'></img>
       </div>
       <Navigation />
         <Footer className='footer'/>

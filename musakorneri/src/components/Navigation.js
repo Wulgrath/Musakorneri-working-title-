@@ -33,7 +33,7 @@ const Navigation = () => {
 
   return (
     <div>
-        <div> {loggedUser ?
+        <div className='loggedIn'> {loggedUser ?
           <div>
             <p>Logged in as <b>{loggedUser.username}</b><Button variant="contained" onClick={() => logOut()} className='logOut'>Log out</Button></p>
           </div>
@@ -42,20 +42,20 @@ const Navigation = () => {
         <Router basename='/' history={history}>
           <AppBar position="static" className='navigation' color='secondary'>
             <Toolbar>
-              <Button color="inherit" component={Link} to='/'>
+              <Button size='small' color="inherit" component={Link} to='/'>
                 Home
               </Button>
-              <Button color="inherit" component={Link} to='/albums'>
+              <Button size='small' color="inherit" component={Link} to='/albums'>
                 Albums
             </Button>
-              <Button color="inherit" component={Link} to='/artists'>
+              <Button size='small' color="inherit" component={Link} to='/artists'>
                 Artists
             </Button>
-              <Button color="inherit" component={Link} to='/rate'>
+              <Button size='small' color="inherit" component={Link} to='/rate'>
                 Add
             </Button>
               <Button color="inherit" component={Link} to='/search'>
-                <SearchIcon />
+                <SearchIcon fontSize='small'/>
             </Button>
             </Toolbar>
           </AppBar>
