@@ -4,6 +4,8 @@ import { useField } from '../hooks'
 import { useSelector, useDispatch } from 'react-redux'
 import { addReview, updateReview, deleteReview } from '../reducers/reviewReducer'
 import { TableContainer, Table, TableBody, TableRow, TableCell, Button, TextField, MenuItem, Grid } from '@material-ui/core'
+import AlbumIcon from '@material-ui/icons/Album';
+
 
 const Album = () => {
 
@@ -22,7 +24,6 @@ const Album = () => {
     setRating(event.target.value);
   }
 
-  //Arvostelun lähetys
   const sendReview = async (event) => {
     event.preventDefault()
 
@@ -49,7 +50,7 @@ const Album = () => {
       dispatch(addReview(content))
     }
   }
-  //arvostelun poisto
+
   const removeReview = (album, review) => {
     const deleteWarning = window.confirm(`Remove your review?`)
     if (deleteWarning) {
@@ -73,19 +74,33 @@ const Album = () => {
     { value: 5, label: '5 - A Classic' }
   ]
 
+
+  /**/
+
+
   if (thisAlbum) {
     return (
-      <div>
-        <h1>{thisAlbum.title_capitalized || thisAlbum.title}
-          <div>by <Link to={`/artists/${thisAlbum.artistID.id || thisAlbum.artistID}`}>
-            {thisAlbum.artist}
-          </Link>
-          </div></h1>
+      <div className='albumPage'>
+        <div className='albumContainer'>
+          <div className='albumCover'>
+            <AlbumIcon fontSize='large' />
+          </div>
+          <div className='albumTextContainer'>
+            <div>
+              <h2 className='albumHeader'>{thisAlbum.title_capitalized || thisAlbum.title}</h2> ({thisAlbum.released})
+            </div>
+            <div> <h2 className='albumHeader'>by <Link to={`/artists/${thisAlbum.artistID.id || thisAlbum.artistID}`}>
+              {thisAlbum.artist}
+            </Link>
+            </h2>
+            </div>
+          </div>
+        </div>
         <h2> Average Rating: {thisAlbum.ratingAvg}</h2>
         { user ? <form onSubmit={sendReview}>
           <div>
             <div className='inputField'>
-              <TextField select label="Rating" required onChange={handleChange} value={rating} variant="outlined" helperText="Select your rating" className='smallInput'>
+              <TextField select label="Your rating" required onChange={handleChange} value={rating} variant="outlined" helperText="Select your rating" className='smallInput'>
                 {options.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
@@ -94,12 +109,12 @@ const Album = () => {
               </TextField>
             </div>
             <div className='inputField'>
-              <TextField {...formReview} rows={4} inputProps={{ maxLength: 200}} label="Your review (optional)" multiline variant="outlined" fullWidth/>
+              <TextField {...formReview} rows={4} inputProps={{ maxLength: 200 }} label="Your review (optional)" multiline variant="outlined" fullWidth />
             </div>
             <Button variant="contained" color="primary" type='submit'>Send</Button>
           </div>
         </form> : <p>You must be logged in to add a review. <Link to={'/login'}>Login</Link> or <Link to='/register'>Create a new account</Link></p>}
-        <h2>Reviews</h2>
+        <h2>Reviews ({thisAlbum.reviews.length})</h2>
         <Grid container>
           <Grid item xs={12}>
             <TableContainer className='customPaper'>
@@ -119,13 +134,13 @@ const Album = () => {
                   {thisAlbum.reviews.map(review =>
                     <TableRow key={review.id || review}>
                       <TableCell>
-                      {user ?
+                        {user ?
                           user.id === review.user ?
                             <button className='deleteButton' onClick={() => removeReview(thisAlbum.id, review)}>X</button> : null
                           : null}
-                        {review.rating} 
+                        {review.rating}
                       </TableCell>
-                      <TableCell className="tableCell" style={{overflow: "hidden", textOverflow: "ellipsis"}}>
+                      <TableCell className="tableCell" style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
                         {review.review}
                       </TableCell>
                       <TableCell>

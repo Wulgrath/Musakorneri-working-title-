@@ -123,3 +123,34 @@
   width: 100%;
   justify-content: center;
 }
+
+.albumHeader {
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.albumContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.albumTextContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  word-wrap: break-word;
+  width: 50%;
+}
+.albumCover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: solid 1px;
+  border-bottom: solid 1px;
+  border-top: solid 1px;
+  border-left: solid 1px;
+  min-width: 10em;
+  height: 10em;
+  margin-right: 1em;
+}

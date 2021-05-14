@@ -35,7 +35,7 @@ const Navigation = () => {
     <div>
         <div> {loggedUser ?
           <div>
-            <p>Logged in as <b>{loggedUser.username}</b> <Button variant="contained" onClick={() => logOut()} className='logOut'>Log out</Button></p>
+            <p>Logged in as <b>{loggedUser.username}</b><Button variant="contained" onClick={() => logOut()} className='logOut'>Log out</Button></p>
           </div>
           : null} </div>
 

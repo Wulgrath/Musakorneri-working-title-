@@ -19,7 +19,7 @@ const Notification = () => {
   else if (notification) {
     return (
       <div>
-        <Alert className='notificationSuccess'>
+        <Alert severity='success' color='info'>
           {notification}
         </Alert>
       </div>
